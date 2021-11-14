@@ -59,7 +59,7 @@ function ContactsApp(props) {
       <Root
         header={<ContactsHeader pageLayout={pageLayout} />}
         content={<ContactsList />}
-        // leftSidebarContent={<ContactsSidebarContent />}
+        leftSidebarContent={<ContactsSidebarContent />}
         sidebarInner
         ref={pageLayout}
         innerScroll

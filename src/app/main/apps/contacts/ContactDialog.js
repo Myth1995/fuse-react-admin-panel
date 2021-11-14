@@ -198,7 +198,7 @@ function ContactDialog(props) {
             />
           </div>
 
-          <div className="flex">
+          {/* <div className="flex">
             <div className="min-w-48 pt-20">
               <Icon color="action">star</Icon>
             </div>
@@ -216,7 +216,7 @@ function ContactDialog(props) {
                 />
               )}
             />
-          </div>
+          </div> */}
 
           <div className="flex">
             <div className="min-w-48 pt-20">
@@ -258,19 +258,19 @@ function ContactDialog(props) {
             />
           </div>
 
-          {/* <div className="flex">
+          <div className="flex">
             <div className="min-w-48 pt-20">
-              <Icon color="action">domain</Icon>
+              <Icon color="action">Transgender</Icon>
             </div>
             <Controller
               control={control}
-              name="company"
+              name="gender"
               render={({ field }) => (
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Company"
-                  id="company"
+                  label="Gender"
+                  id="gender"
                   variant="outlined"
                   fullWidth
                 />
@@ -280,24 +280,24 @@ function ContactDialog(props) {
 
           <div className="flex">
             <div className="min-w-48 pt-20">
-              <Icon color="action">work</Icon>
+              <Icon color="action">flags</Icon>
             </div>
             <Controller
               control={control}
-              name="jobTitle"
+              name="nationality"
               render={({ field }) => (
                 <TextField
                   {...field}
                   className="mb-24"
-                  label="Job title"
-                  id="jobTitle"
-                  name="jobTitle"
+                  label="Nationality"
+                  id="nationality"
+                  name="nation"
                   variant="outlined"
                   fullWidth
                 />
               )}
             />
-          </div> */}
+          </div>
 
           <div className="flex">
             <div className="min-w-48 pt-20">
@@ -345,6 +345,46 @@ function ContactDialog(props) {
 
           <div className="flex">
             <div className="min-w-48 pt-20">
+              <Icon color="action">language</Icon>
+            </div>
+            <Controller
+              control={control}
+              name="nationality"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Nationality"
+                  id="nationality"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+              <Icon color="action">room</Icon>
+            </div>
+            <Controller
+              control={control}
+              name="city"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="City"
+                  id="city"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
               <Icon color="action">home</Icon>
             </div>
             <Controller
@@ -356,6 +396,103 @@ function ContactDialog(props) {
                   className="mb-24"
                   label="Address"
                   id="address"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+              <Icon color="action">home</Icon>
+            </div>
+            <Controller
+              control={control}
+              name="postcode"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Postcode"
+                  id="postcode"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+              <Icon color="action">code</Icon>
+            </div>
+            <Controller
+              control={control}
+              name="english_test"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="English Test"
+                  id="english_test"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+            </div>
+            <Controller
+              control={control}
+              name="test_type"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Test Type"
+                  id="test_type"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+            </div>
+            <Controller
+              control={control}
+              name="medical"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Medical / special needs"
+                  id="medical"
+                  variant="outlined"
+                  fullWidth
+                />
+              )}
+            />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20">
+            </div>
+            <Controller
+              control={control}
+              name="criminal"
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  className="mb-24"
+                  label="Criminal convictions"
+                  id="criminal"
                   variant="outlined"
                   fullWidth
                 />

@@ -1531,12 +1531,11 @@ const projectDashboardAppDB = {
 
 mock.onGet('/api/project-dashboard-app/widgets').reply(config => {
 	return new Promise((resolve, reject)=>{
-		let data = [];
 		instance.get('/dashboard', {
 			timeout: 1000
 		})
 		.then(res => {
-			data = res.data;
+			let data = res.data;
 			projectDashboardAppDB.widgets[0].data.count = data["user"];
 			projectDashboardAppDB.widgets[1].data.count = data["app"];
 			projectDashboardAppDB.widgets[2].data.count = data["file"];

@@ -78,16 +78,17 @@ function ContactsList(props) {
               }}
               size="large"
             >
-              {user.starred && user.starred.includes(row.original.id) ? (
+              <Icon>edit</Icon>
+              {/* {user.starred && user.starred.includes(row.original.id) ? (
                 <Icon className="text-yellow-700">star</Icon>
               ) : (
                 <Icon>star_border</Icon>
-              )}
+              )} */}
             </IconButton>
             <IconButton
               onClick={(ev) => {
                 ev.stopPropagation();
-                dispatch(removeContact(row.original.id));
+                dispatch(removeContact(row.original.ID));
               }}
               size="large"
             >
