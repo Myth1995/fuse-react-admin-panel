@@ -37,6 +37,12 @@ const navigationConfig = [
             type: 'item',
             url: '/apps/dashboards/project',
           },
+          {
+            id: 'finance-dashboard',
+            title: 'Finance',
+            type: 'item',
+            url: '/apps/dashboards/finance',
+          },
         ],
       },
       {

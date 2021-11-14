@@ -4,6 +4,7 @@ import ChatAppConfig from './chat/ChatAppConfig';
 import ContactsAppConfig from './contacts/ContactsAppConfig';
 import AnalyticsDashboardAppConfig from './dashboards/analytics/AnalyticsDashboardAppConfig';
 import ProjectDashboardAppConfig from './dashboards/project/ProjectDashboardAppConfig';
+import FinanceDashboardAppConfig from './dashboards/finance/FinanceDashboardAppConfig';
 import ECommerceAppConfig from './e-commerce/ECommerceAppConfig';
 import FileManagerAppConfig from './file-manager/FileManagerAppConfig';
 import MailAppConfig from './mail/MailAppConfig';
@@ -14,6 +15,7 @@ import TodoAppConfig from './todo/TodoAppConfig';
 const appsConfigs = [
   AnalyticsDashboardAppConfig,
   ProjectDashboardAppConfig,
+  FinanceDashboardAppConfig,
   MailAppConfig,
   TodoAppConfig,
   FileManagerAppConfig,
