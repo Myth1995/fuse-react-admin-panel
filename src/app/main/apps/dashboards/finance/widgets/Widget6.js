@@ -1,35 +1,70 @@
+import _ from '@lodash';
 import Card from '@mui/material/Card';
-import Icon from '@mui/material/Icon';
-import Tooltip from '@mui/material/Tooltip';
-import GoogleMap from 'google-map-react';
-
-function Marker(props) {
-  return (
-    <Tooltip title={props.text} placement="top">
-      <Icon className="text-red">place</Icon>
-    </Tooltip>
-  );
-}
+import { useTheme } from '@mui/material/styles';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
+import { memo, useState } from 'react';
+import ReactApexChart from 'react-apexcharts';
+import Box from '@mui/material/Box';
 
 function Widget6(props) {
+  const theme = useTheme();
+  const [tabValue, setTabValue] = useState(0);
+  const data = _.merge({}, props.data);
+  const series = data.series[Object.keys(data.series)[tabValue]];
+
+  _.setWith(data, 'options.colors', [theme.palette.secondary.main, theme.palette.primary.main]);
+
   return (
-    <Card className="w-full h-512 rounded-20 shadow">
-      <GoogleMap
-        bootstrapURLKeys={{
-          key: process.env.REACT_APP_MAP_KEY,
-        }}
-        defaultZoom={1}
-        defaultCenter={[17.308688, 7.03125]}
-        options={{
-          styles: props.data.styles,
-        }}
-      >
-        {props.data.markers.map((marker) => (
-          <Marker key={marker.label} text={marker.label} lat={marker.lat} lng={marker.lng} />
-        ))}
-      </GoogleMap>
+    <Card className="w-full rounded-20 shadow">
+      <div className="relative p-20 flex flex-row items-center justify-between">
+        <div className="flex flex-col">
+          <Typography className="h3 sm:h2 font-medium">Incomes & Salary expense</Typography>
+          <Typography className="h5 sm:h2 font-medium" color="textSecondary">Income vs Salary expenses visual chart</Typography>
+        </div>
+
+        <div className="flex flex-row items-center">
+          <Tabs
+            value={tabValue}
+            onChange={(event, value) => setTabValue(value)}
+            indicatorColor="secondary"
+            textColor="inherit"
+            variant="scrollable"
+            scrollButtons={false}
+            className="w-full px-24 -mx-4 min-h-40"
+            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+            TabIndicatorProps={{
+              children: (
+                <Box
+                  sx={{ bgcolor: 'text.disabled' }}
+                  className="w-full h-full rounded-full opacity-20"
+                />
+              ),
+            }}
+          >
+            {Object.keys(data.series).map((key) => (
+              <Tab
+                key={key}
+                className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12 capitalize"
+                disableRipple
+                label={key}
+              />
+            ))}
+          </Tabs>
+        </div>
+      </div>
+
+      <div className="relative h-200 sm:h-320 sm:pb-16">
+        <ReactApexChart
+          options={data.options}
+          series={series}
+          type={data.options.chart.type}
+          height={data.options.chart.height}
+        />
+      </div>
     </Card>
   );
 }
 
-export default Widget6;
+export default memo(Widget6);

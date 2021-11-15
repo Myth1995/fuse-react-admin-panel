@@ -1,80 +1,105 @@
 import _ from '@lodash';
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import FormControl from '@mui/material/FormControl';
-import Icon from '@mui/material/Icon';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import { memo, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import Box from '@mui/material/Box';
 
 function Widget7(props) {
   const theme = useTheme();
-  const [serie, setSerie] = useState('Today');
+  const [tabValue, setTabValue] = useState(0);
   const data = _.merge({}, props.data);
+  const series = data.series[Object.keys(data.series)[tabValue]];
 
-  _.setWith(data, 'options.theme.monochrome.color', theme.palette.primary.main);
+  _.setWith(data, 'options.colors', [theme.palette.secondary.main, theme.palette.primary.main]);
 
   return (
-    <Card className="w-full rounded-20 shadow p-20">
-      <div className="pb-24">
-        <Typography className="h3 font-medium">Sessions by device</Typography>
+    <Card className="w-full rounded-20 shadow">
+      <div className="relative p-20 flex flex-row items-center justify-between">
+        <div className="flex flex-col">
+          <Typography className="h3 sm:h2 font-medium">Account Balance</Typography>
+          <Typography className="h5 sm:h2 font-medium" color="textSecondary">Monthly balance growth and avg. monthly income</Typography>
+        </div>
+
+        <div className="flex flex-row items-center">
+          <Tabs
+            value={tabValue}
+            onChange={(event, value) => setTabValue(value)}
+            indicatorColor="secondary"
+            textColor="inherit"
+            variant="scrollable"
+            scrollButtons={false}
+            className="w-full px-24 -mx-4 min-h-40"
+            classes={{ indicator: 'flex justify-center bg-transparent w-full h-full' }}
+            TabIndicatorProps={{
+              children: (
+                <Box
+                  sx={{ bgcolor: 'text.disabled' }}
+                  className="w-full h-full rounded-full opacity-20"
+                />
+              ),
+            }}
+          >
+            {Object.keys(data.series).map((key) => (
+              <Tab
+                key={key}
+                className="text-14 font-semibold min-h-40 min-w-64 mx-4 px-12 capitalize"
+                disableRipple
+                label={key}
+              />
+            ))}
+          </Tabs>
+        </div>
       </div>
 
-      <div className="h-256 relative">
+      <div className="flex flex-row flex-wrap items-center mt-12 pb-40">
+        <div className="p-20 pb-0">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Card Limit
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              {data.conversion.value}
+            </Typography>
+          </div>
+        </div>
+
+        <div className="p-20 pb-0">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Spent
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              {data.conversion.value}
+            </Typography>
+          </div>
+        </div>
+
+        <div className="p-20 pb-0">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Minimum
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              {data.conversion.value}
+            </Typography>
+          </div>
+        </div>
+      </div>
+
+      <div className="relative h-200 sm:h-320 sm:pb-16">
         <ReactApexChart
           options={data.options}
-          series={data.series[serie][0].data}
+          series={series}
           type={data.options.chart.type}
           height={data.options.chart.height}
         />
-      </div>
-
-      <div className="mb-24 flex flex-row items-center justify-center">
-        {data.options.labels.map((label, index) => (
-          <div key={label} className="px-16 flex flex-col items-center">
-            <Typography className="h4 font-semibold" color="textSecondary">
-              {label}
-            </Typography>
-            <Typography className="text-18 font-semibold py-8">
-              {data.series[serie][0].data[index]}%
-            </Typography>
-
-            <div className="flex flex-row items-start justify-center">
-              {data.series[serie][0].change[index] < 0 && (
-                <Icon className="text-18 text-red">arrow_downward</Icon>
-              )}
-
-              {data.series[serie][0].change[index] > 0 && (
-                <Icon className="text-18 text-green">arrow_upward</Icon>
-              )}
-              <Typography className="h5 px-4 font-semibold" color="textSecondary">
-                {data.series[serie][0].change[index]}%
-              </Typography>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex flex-row items-center justify-between">
-        <div>
-          <FormControl className="" variant="filled">
-            <Select
-              classes={{ select: 'py-8' }}
-              value={serie}
-              onChange={(ev) => setSerie(ev.target.value)}
-            >
-              {Object.keys(data.series).map((key) => (
-                <MenuItem key={key} value={key}>
-                  {key}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </div>
-        <Button size="small">Overview</Button>
       </div>
     </Card>
   );

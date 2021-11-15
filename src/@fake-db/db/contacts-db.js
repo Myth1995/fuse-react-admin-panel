@@ -410,18 +410,16 @@ const contactsDB = {
 };
 
 mock.onGet('/api/contacts-app/contacts').reply(config => {
-	return new Promise((resolve, reject)=>{
-		let data = [];
-		return instance.get('/', {
-			timeout: 1000
-		})
-		.then(res => {
-			data = res.data;
-			contactsDB.contacts = data;
-			return resolve([200, contactsDB.contacts]);
-			
-		});
+	let data = [];
+	return instance.get('/', {
+		timeout: 1000
 	})
+	.then(res => {
+		data = res.data;
+		contactsDB.contacts = data;
+		return [200, contactsDB.contacts];
+		
+	});
 	// const { id } = config.params;
 	// let response = [];
 	// switch (id) {

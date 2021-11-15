@@ -1,58 +1,65 @@
-import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import Divider from '@mui/material/Divider';
 import Icon from '@mui/material/Icon';
-import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { memo } from 'react';
+import _ from '@lodash';
 
-function Widget9(props) {
+function Widget4(props) {
+  const theme = useTheme();
+  const data = _.merge({}, props.data);
+
+  _.setWith(data, 'options.colors', [theme.palette.error.main]);
+
   return (
     <Card className="w-full rounded-20 shadow">
-      <div className="px-8 py-20 flex flex-row items-start justify-between">
-        <Typography className="h3 font-medium px-12">Top campaigns</Typography>
-
-        <div className="-mt-12">
-          <IconButton aria-label="more" size="large">
-            <Icon>more_vert</Icon>
-          </IconButton>
+      <div className="relative p-20 flex flex-row items-center justify-between">
+        <div className="flex flex-col">
+          <Typography className="h3 sm:h2 font-medium">Budget</Typography>
+          <Typography className="h5 sm:h2 font-medium" color="textSecondary">Monthly budget summary</Typography>
         </div>
+        
       </div>
 
-      <table className="simple clickable">
-        <thead>
-          <tr>
-            <th aria-label="title" />
-            <th className="text-right">
-              <Typography color="textSecondary" className="font-semibold">
-                Clicks
-              </Typography>
-            </th>
-            <th className="text-right">
-              <Typography color="textSecondary" className="font-semibold">
-                Conv
-              </Typography>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.data.rows.map((row) => (
-            <tr key={row.title}>
-              <td className="font-semibold">{row.title}</td>
-              <td className="text-right">{row.clicks}</td>
-              <td className="text-right">{row.conversion}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="flex flex-row flex-wrap items-center">
+        <div className="p-20 pr-25">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            USD
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-36 font-semibold leading-none tracking-tighter">
+              {data.visits.value}
+            </Typography>
+          </div>
+        </div>
 
-      <Divider className="card-divider w-full" />
+        <div className="p-20 pr-25">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            UZS
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-36 font-semibold leading-none tracking-tighter">
+              {data.visits.value}
+            </Typography>
+          </div>
+        </div>
 
-      <div className="p-20 flex flex-row items-center">
-        <Button variant="outlined">Go to campaigns</Button>
+        <div className="p-20 pr-25">
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            GBP
+          </Typography>
+          
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-36 font-semibold leading-none tracking-tighter">
+              {data.visits.value}
+            </Typography>
+          </div>
+        </div>
       </div>
     </Card>
   );
 }
 
-export default memo(Widget9);
+export default memo(Widget4);

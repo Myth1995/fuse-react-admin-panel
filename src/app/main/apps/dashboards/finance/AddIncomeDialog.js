@@ -1,69 +1,63 @@
-import { useState } from "react";
-import FuseUtils from '@fuse/utils/FuseUtils';
 import { yupResolver } from '@hookform/resolvers/yup';
+import formatISO from 'date-fns/formatISO';
+import { Controller, useForm } from 'react-hook-form';
+import FuseUtils from '@fuse/utils/FuseUtils';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
+import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { DateTimePicker } from '@mui/lab';
 import { useCallback, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-
-import _ from '@lodash';
 import * as yup from 'yup';
-
+import _ from '@lodash';
 import {
-  removeContact,
-  updateContact,
-  addContact,
-  closeNewContactDialog,
-  // closeEditContactDialog,
-} from './store/widgetsSlice';
+  removeIncome,
+  closeNewIncomeDialog,
+  closeEditIncomeDialog,
+  updateIncome,
+  addIncome,
+} from './store/incomesSlice';
 
 const defaultValues = {
-  id: '',
-  name: '',
-  lastName: '',
-  avatar: 'assets/images/avatars/profile.jpg',
-  nickname: '',
-  company: '',
-  jobTitle: '',
-  email: '',
-  phone: '',
-  address: '',
-  birthday: '',
-  notes: '',
+  id: FuseUtils.generateGUID(),
+  title: '',
+  allDay: true,
+  start: formatISO(new Date()),
+  end: formatISO(new Date()),
+  extendedProps: { desc: '' },
 };
 
 /**
  * Form Validation Schema
  */
 const schema = yup.object().shape({
-  name: yup.string().required('You must enter a name'),
+  title: yup.string().required('You must enter a title'),
 });
 
 function AddIncomeDialog(props) {
   const dispatch = useDispatch();
-  const contactDialog = useSelector(({ FinanceDashboardApp }) => FinanceDashboardApp.widgets.contactDialog);
+  const eventDialog = useSelector(({ financeDashboardApp }) => financeDashboardApp.incomes.eventDialog);
 
-  const { control, watch, reset, handleSubmit, formState, getValues } = useForm({
-    mode: 'onChange',
+  const { reset, formState, watch, control, getValues } = useForm({
     defaultValues,
+    mode: 'onChange',
     resolver: yupResolver(schema),
   });
 
   const { isValid, dirtyFields, errors } = formState;
 
+  const start = watch('start');
+  const end = watch('end');
   const id = watch('id');
-  const name = watch('name');
-  const avatar = watch('avatar');
 
   /**
    * Initialize Dialog with Data
@@ -72,48 +66,50 @@ function AddIncomeDialog(props) {
     /**
      * Dialog type: 'edit'
      */
-    if (contactDialog.type === 'edit' && contactDialog.data) {
-      reset({ ...contactDialog.data });
+    if (eventDialog.type === 'edit' && eventDialog.data) {
+      reset({ ...eventDialog.data });
     }
 
     /**
      * Dialog type: 'new'
      */
-    if (contactDialog.type === 'new') {
+    if (eventDialog.type === 'new') {
       reset({
         ...defaultValues,
-        ...contactDialog.data,
+        ...eventDialog.data,
         id: FuseUtils.generateGUID(),
       });
     }
-  }, [contactDialog.data, contactDialog.type, reset]);
+  }, [eventDialog.data, eventDialog.type, reset]);
 
   /**
    * On Dialog Open
    */
   useEffect(() => {
-    if (contactDialog.props.open) {
+    if (eventDialog.props.open) {
       initDialog();
     }
-  }, [contactDialog.props.open, initDialog]);
+  }, [eventDialog.props.open, initDialog]);
 
   /**
    * Close Dialog
    */
-  // function closeComposeDialog() {
-  //   return contactDialog.type === 'edit'
-  //     ? dispatch(closeEditContactDialog())
-  //     : dispatch(closeNewContactDialog());
-  // }
+  function closeComposeDialog() {
+    return eventDialog.type === 'edit'
+      ? dispatch(closeEditIncomeDialog())
+      : dispatch(closeNewIncomeDialog());
+  }
 
   /**
    * Form Submit
    */
-  function onSubmit(data) {
-    if (contactDialog.type === 'new') {
-      dispatch(addContact(data));
+  function onSubmit(ev) {
+    ev.preventDefault();
+    const data = getValues();
+    if (eventDialog.type === 'new') {
+      dispatch(addEvent(data));
     } else {
-      dispatch(updateContact({ ...contactDialog.data, ...data }));
+      dispatch(updateEvent({ ...eventDialog.data, ...data }));
     }
     closeComposeDialog();
   }
@@ -122,433 +118,143 @@ function AddIncomeDialog(props) {
    * Remove Event
    */
   function handleRemove() {
-    dispatch(removeContact(id));
+    dispatch(removeEvent(id));
     closeComposeDialog();
   }
 
   return (
     <Dialog
-      classes={{
-        paper: 'm-24',
-      }}
-      {...contactDialog.props}
+      {...eventDialog.props}
       onClose={closeComposeDialog}
       fullWidth
       maxWidth="xs"
+      component="form"
     >
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {contactDialog.type === 'new' ? 'New Contact' : 'Edit Contact'}
+            {eventDialog.type === 'new' ? 'New Event' : 'Edit Event'}
           </Typography>
         </Toolbar>
-        <div className="flex flex-col items-center justify-center pb-24">
-          <Avatar className="w-96 h-96" alt="contact avatar" src={avatar} />
-          {contactDialog.type === 'edit' && (
-            <Typography variant="h6" color="inherit" className="pt-8">
-              {name}
-            </Typography>
-          )}
-        </div>
       </AppBar>
-      <form
-        noValidate
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:overflow-hidden"
-      >
-        <DialogContent classes={{ root: 'p-24' }}>
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">account_circle</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="family_name"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Name"
-                  id="name"
-                  error={!!errors.name}
-                  helperText={errors?.name?.message}
-                  variant="outlined"
-                  required
-                  fullWidth
-                />
-              )}
-            />
-          </div>
 
-          <div className="flex">
-            <div className="min-w-48 pt-20" />
+      <form noValidate>
+        <DialogContent classes={{ root: 'p-16 pb-0 sm:p-24 sm:pb-0' }}>
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="title"
+                label="Title"
+                className="mt-8 mb-16"
+                error={!!errors.title}
+                helperText={errors?.title?.message}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                variant="outlined"
+                autoFocus
+                required
+                fullWidth
+              />
+            )}
+          />
 
-            <Controller
-              control={control}
-              name="given_name"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Last name"
-                  id="lastName"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
+          <Controller
+            name="allDay"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <FormControlLabel
+                className="mt-8 mb-16"
+                label="All Day"
+                control={
+                  <Switch
+                    onChange={(ev) => {
+                      onChange(ev.target.checked);
+                    }}
+                    checked={value}
+                    name="allDay"
+                  />
+                }
+              />
+            )}
+          />
 
-          {/* <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">star</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="nickname"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Nickname"
-                  id="nickname"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div> */}
+          <Controller
+            name="start"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value } }) => (
+              <DateTimePicker
+                value={value}
+                onChange={onChange}
+                renderInput={(_props) => (
+                  <TextField label="Start" className="mt-8 mb-16 w-full" {..._props} />
+                )}
+                className="mt-8 mb-16 w-full"
+                maxDate={end}
+              />
+            )}
+          />
 
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">phone</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="telephone"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Phone"
-                  id="phone"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
+          <Controller
+            name="end"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value } }) => (
+              <DateTimePicker
+                value={value}
+                onChange={onChange}
+                renderInput={(_props) => (
+                  <TextField label="End" className="mt-8 mb-16 w-full" {..._props} />
+                )}
+                minDate={start}
+              />
+            )}
+          />
 
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">email</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="email"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Email"
-                  id="email"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">Transgender</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="gender"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Gender"
-                  id="gender"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">flags</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="nationality"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Nationality"
-                  id="nationality"
-                  name="nation"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">cake</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="birthday"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  id="birthday"
-                  label="Birthday"
-                  type="date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">public</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="birth_country"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Country"
-                  id="country"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">language</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="nationality"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Nationality"
-                  id="nationality"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">room</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="city"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="City"
-                  id="city"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">home</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="address"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Address"
-                  id="address"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">home</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="postcode"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Postcode"
-                  id="postcode"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">code</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="english_test"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="English Test"
-                  id="english_test"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-            </div>
-            <Controller
-              control={control}
-              name="test_type"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Test Type"
-                  id="test_type"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-            </div>
-            <Controller
-              control={control}
-              name="medical"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Medical / special needs"
-                  id="medical"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-            </div>
-            <Controller
-              control={control}
-              name="criminal"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Criminal convictions"
-                  id="criminal"
-                  variant="outlined"
-                  fullWidth
-                />
-              )}
-            />
-          </div>
-
-          <div className="flex">
-            <div className="min-w-48 pt-20">
-              <Icon color="action">note</Icon>
-            </div>
-            <Controller
-              control={control}
-              name="notes"
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  className="mb-24"
-                  label="Notes"
-                  id="notes"
-                  variant="outlined"
-                  multiline
-                  rows={5}
-                  fullWidth
-                />
-              )}
-            />
-          </div>
+          <Controller
+            name="extendedProps.desc"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                className="mt-8 mb-16"
+                id="desc"
+                label="Description"
+                type="text"
+                multiline
+                rows={5}
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
         </DialogContent>
 
-        {contactDialog.type === 'new' ? (
-          <DialogActions className="justify-between p-4 pb-16">
-            <div className="px-16">
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                disabled={_.isEmpty(dirtyFields) || !isValid}
-              >
-                Add
-              </Button>
-            </div>
+        {eventDialog.type === 'new' ? (
+          <DialogActions className="justify-between px-8 sm:px-16 pb-16">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={onSubmit}
+              disabled={_.isEmpty(dirtyFields) || !isValid}
+            >
+              Add
+            </Button>
           </DialogActions>
         ) : (
-          <DialogActions className="justify-between p-4 pb-16">
-            <div className="px-16">
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                disabled={_.isEmpty(dirtyFields) || !isValid}
-              >
-                Save
-              </Button>
-            </div>
+          <DialogActions className="justify-between px-8 sm:px-16 pb-16">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={onSubmit}
+              disabled={_.isEmpty(dirtyFields) || !isValid}
+            >
+              Save
+            </Button>
             <IconButton onClick={handleRemove} size="large">
               <Icon>delete</Icon>
             </IconButton>

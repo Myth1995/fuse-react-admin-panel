@@ -114,7 +114,7 @@ const financeDashboardAppDB = {
 		{
 			id: 'widget2',
 			conversion: {
-				value: 492,
+				value: 49212121,
 				ofTarget: 13
 			},
 			series: [
@@ -365,332 +365,6 @@ const financeDashboardAppDB = {
 		},
 		{
 			id: 'widget6',
-			markers: [
-				{
-					lat: 52,
-					lng: -73,
-					label: '120'
-				},
-				{
-					lat: 37,
-					lng: -104,
-					label: '498'
-				},
-				{
-					lat: 21,
-					lng: -7,
-					label: '443'
-				},
-				{
-					lat: 55,
-					lng: 75,
-					label: '332'
-				},
-				{
-					lat: 51,
-					lng: 7,
-					label: '50'
-				},
-				{
-					lat: 31,
-					lng: 12,
-					label: '221'
-				},
-				{
-					lat: 45,
-					lng: 44,
-					label: '455'
-				},
-				{
-					lat: -26,
-					lng: 134,
-					label: '231'
-				},
-				{
-					lat: -9,
-					lng: -60,
-					label: '67'
-				},
-				{
-					lat: 33,
-					lng: 104,
-					label: '665'
-				}
-			],
-			styles: [
-				{
-					featureType: 'administrative',
-					elementType: 'labels.text.fill',
-					stylers: [
-						{
-							color: '#444444'
-						}
-					]
-				},
-				{
-					featureType: 'landscape',
-					elementType: 'all',
-					stylers: [
-						{
-							color: '#f2f2f2'
-						}
-					]
-				},
-				{
-					featureType: 'poi',
-					elementType: 'all',
-					stylers: [
-						{
-							visibility: 'off'
-						}
-					]
-				},
-				{
-					featureType: 'road',
-					elementType: 'all',
-					stylers: [
-						{
-							saturation: -100
-						},
-						{
-							lightness: 45
-						}
-					]
-				},
-				{
-					featureType: 'road.highway',
-					elementType: 'all',
-					stylers: [
-						{
-							visibility: 'simplified'
-						}
-					]
-				},
-				{
-					featureType: 'road.arterial',
-					elementType: 'labels.icon',
-					stylers: [
-						{
-							visibility: 'off'
-						}
-					]
-				},
-				{
-					featureType: 'transit',
-					elementType: 'all',
-					stylers: [
-						{
-							visibility: 'off'
-						}
-					]
-				},
-				{
-					featureType: 'water',
-					elementType: 'all',
-					stylers: [
-						{
-							color: '#039be5'
-						},
-						{
-							visibility: 'on'
-						}
-					]
-				}
-			]
-		},
-		{
-			id: 'widget7',
-			series: {
-				Today: [
-					{
-						data: [92.8, 6.1, 1.1],
-						change: [-0.6, 0.7, 0.1]
-					}
-				],
-				Yesterday: [
-					{
-						data: [77.2, 8.4, 14.4],
-						change: [-2.3, 0.3, -0.2]
-					}
-				],
-				'Last 7 days': [
-					{
-						data: [88.2, 9.2, 2.6],
-						change: [1.9, -0.4, 0.3]
-					}
-				],
-				'Last 28 days': [
-					{
-						data: [65.2, 2.6, 32.2],
-						change: [-12.6, -0.7, 4.2]
-					}
-				],
-				'Last 90 days': [
-					{
-						data: [93.5, 4.2, 2.3],
-						change: [2.6, -0.7, 2.1]
-					}
-				]
-			},
-			options: {
-				chart: {
-					height: '100%',
-					type: 'donut'
-				},
-				labels: ['Desktop', 'Mobile', 'Tablet'],
-				legend: {
-					show: false
-				},
-				dataLabels: {
-					enabled: false
-				},
-				stroke: {
-					width: 2,
-					colors: undefined
-				},
-				fill: {
-					opacity: 1
-				},
-				theme: {
-					monochrome: {
-						enabled: true,
-						shadeTo: 'light',
-						shadeIntensity: 0.65
-					}
-				},
-				states: {
-					hover: {
-						filter: {
-							type: 'darken'
-						}
-					}
-				}
-			}
-		},
-		{
-			id: 'widget8',
-			series: [
-				[
-					{
-						name: '1Day',
-						data: [72, 65, 70, 78, 85, 82, 88]
-					}
-				],
-				[
-					{
-						name: '1Week',
-						data: [540, 539, 527, 548, 540, 552, 566]
-					}
-				],
-				[
-					{
-						name: '1Month',
-						data: [1520, 1529, 1567, 1588, 1590, 1652, 1622]
-					}
-				]
-			],
-			labels: ['1', '2', '3', '4', '5', '6', '7'],
-			options: {
-				chart: {
-					type: 'line',
-					height: '100%',
-					toolbar: {
-						show: false
-					},
-					zoom: {
-						enabled: false
-					}
-				},
-				stroke: {
-					width: 3
-				},
-				dataLabels: {
-					enabled: false
-				},
-				markers: {
-					size: 3,
-					strokeWidth: 1,
-					strokeOpacity: 1,
-					fillOpacity: 1,
-					hover: {
-						size: 3
-					}
-				},
-				xaxis: {
-					labels: {
-						show: false
-					},
-					axisBorder: {
-						show: false
-					},
-					axisTicks: {
-						show: false
-					}
-				},
-				yaxis: {
-					tooltip: {
-						enabled: true
-					}
-				},
-				grid: {
-					position: 'back',
-					padding: {
-						top: 0,
-						bottom: 0
-					}
-				},
-				legend: {
-					show: false
-				},
-				tooltip: {
-					followCursor: true,
-					theme       : 'dark',
-					fixed: {
-						enabled: false,
-						position: 'topRight',
-						offsetX: 0,
-						offsetY: 0,
-					},
-				}
-			},
-			today: '12,540',
-			change: {
-				value: 321,
-				percentage: 2.05
-			}
-		},
-		{
-			id: 'widget9',
-			rows: [
-				{
-					title: 'Holiday Travel',
-					clicks: 3621,
-					conversion: 90
-				},
-				{
-					title: 'Get Away Deals',
-					clicks: 703,
-					conversion: 7
-				},
-				{
-					title: 'Airfare',
-					clicks: 532,
-					conversion: 0
-				},
-				{
-					title: 'Vacation',
-					clicks: 201,
-					conversion: 8
-				},
-				{
-					title: 'Hotels',
-					clicks: 94,
-					conversion: 4
-				}
-			]
-		},
-		{
-			id: 'widget10',
 			series: {
 				today: [
 					{
@@ -792,9 +466,299 @@ const financeDashboardAppDB = {
 				}
 			}
 		},
+		{
+			id: 'widget7',
+			conversion: {
+				value: 492,
+				ofTarget: 13
+			},
+			series: {
+				today: [
+					{
+						name: 'Visitors',
+						data: [1210, 1380, 1520, 1290, 490, 1390, 1050, 680, 1300, 2140, 1520, 1890]
+					},
+					{
+						name: 'Page Views',
+						data: [3000, 3400, 4100, 3800, 2200, 3200, 2900, 1900, 2900, 3900, 2500, 3800]
+					}
+				],
+				yesterday: [
+					{
+						name: 'Visitors',
+						data: [1190, 1300, 2340, 1220, 1590, 1990, 1250, 1080, 2000, 2380, 2420, 2190]
+					},
+					{
+						name: 'Page views',
+						data: [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800]
+					}
+				]
+			},
+			options: {
+				chart: {
+					type: 'area',
+					height: '100%',
+					stacked: true,
+					foreColor: '#999',
+					toolbar: {
+						show: false
+					},
+					zoom: {
+						enabled: false
+					}
+				},
+				stroke: {
+					curve: 'smooth',
+					width: 3
+				},
+				dataLabels: {
+					enabled: false
+				},
+				markers: {
+					size: 0,
+					strokeColor: '#fff',
+					strokeWidth: 3,
+					strokeOpacity: 1,
+					fillOpacity: 1,
+					hover: {
+						size: 6
+					}
+				},
+				xaxis: {
+					categories: [
+						// '12am',
+						// '2am',
+						// '4am',
+						// '6am',
+						// '8am',
+						// '10am',
+						// '12pm',
+						// '2pm',
+						// '4pm',
+						// '6pm',
+						// '8pm',
+						// '10pm'
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						'',
+						''
+					],
+					axisBorder: {
+						show: false
+					},
+					axisTicks: {
+						show: false
+					}
+				},
+				yaxis: {
+					tooltip: {
+						enabled: true
+					}
+				},
+				grid: {
+					position: 'back'
+				},
+				legend: {
+					show: false
+				},
+				fill: {
+					type: 'solid',
+					opacity: 0.7
+				},
+				tooltip: {
+					followCursor: true,
+					theme       : 'dark',
+					fixed: {
+						enabled: false,
+						position: 'topRight',
+						offsetX: 0,
+						offsetY: 0,
+					},
+				}
+			}
+		},
+		{
+			id: 'widget9',
+			visits: {
+				value: 882,
+				ofTarget: -9
+			},
+			series: [
+				{
+					name: 'Visits',
+					data: [432, 428, 327, 363, 456, 267, 231]
+				}
+			],
+			options: {
+				chart: {
+					type: 'area',
+					height: '100%',
+					sparkline: {
+						enabled: true
+					}
+				},
+				xaxis: {
+					categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+				},
+				fill: {
+					type: 'solid',
+					opacity: 0.7
+				},
+				tooltip: {
+					followCursor: true,
+					theme       : 'dark',
+					fixed: {
+						enabled: false,
+						position: 'topRight',
+						offsetX: 0,
+						offsetY: 0,
+					},
+				}
+			}
+		},
+	],
+	incomes: [
+		{
+			id: '5725a680b3249760ea21de52',
+			name: 'Abbott',
+			lastName: 'Keitch',
+			avatar: 'assets/images/avatars/Abbott.jpg',
+			nickname: 'Royalguard',
+			company: 'Saois',
+			jobTitle: 'Digital Archivist',
+			email: 'abbott@withinpixels.com',
+			phone: '+1-202-555-0175',
+			address: '933 8th Street Stamford, CT 06902',
+			birthday: undefined,
+			notes: ''
+		},
+	],
+	transactions: [
+		{
+			id: '1',
+			name: 'A Walk Amongst Friends - Canvas Print',
+			handle: 'a-walk-amongst-friends-canvas-print',
+			description:
+				'Officia amet eiusmod eu sunt tempor voluptate laboris velit nisi amet enim proident et. Consequat laborum non eiusmod cillum eu exercitation. Qui adipisicing est fugiat eiusmod esse. Sint aliqua cupidatat pariatur mollit ad est proident reprehenderit. Eiusmod adipisicing laborum incididunt sit aliqua ullamco.',
+			categories: ['Canvas Print', 'Nature'],
+			tags: ['canvas-print', 'nature'],
+			featuredImageId: '1',
+			images: [
+				{
+					id: '0',
+					url: 'assets/images/ecommerce/a-walk-amongst-friends.jpg',
+					type: 'image'
+				},
+				{
+					id: '1',
+					url: 'assets/images/ecommerce/braies-lake.jpg',
+					type: 'image'
+				},
+				{
+					id: '2',
+					url: 'assets/images/ecommerce/fall-glow.jpg',
+					type: 'image'
+				},
+				{
+					id: '3',
+					url: 'assets/images/ecommerce/first-snow.jpg',
+					type: 'image'
+				},
+				{
+					id: '4',
+					url: 'assets/images/ecommerce/lago-di-braies.jpg',
+					type: 'image'
+				},
+				{
+					id: '5',
+					url: 'assets/images/ecommerce/lago-di-sorapis.jpg',
+					type: 'image'
+				},
+				{
+					id: '6',
+					url: 'assets/images/ecommerce/never-stop-changing.jpg',
+					type: 'image'
+				},
+				{
+					id: '7',
+					url: 'assets/images/ecommerce/reaching.jpg',
+					type: 'image'
+				},
+				{
+					id: '8',
+					url: 'assets/images/ecommerce/morain-lake.jpg',
+					type: 'image'
+				},
+				{
+					id: '9',
+					url: 'assets/images/ecommerce/yosemite.jpg',
+					type: 'image'
+				}
+			],
+			priceTaxExcl: 9.309,
+			priceTaxIncl: 10.24,
+			taxRate: 10,
+			comparedPrice: 19.9,
+			quantity: 3,
+			sku: 'A445BV',
+			width: '22cm',
+			height: '24cm',
+			depth: '15cm',
+			weight: '3kg',
+			extraShippingFee: 3.0,
+			active: true
+		},
 	]
 };
 
 mock.onGet('/api/finance-dashboard-app/widgets').reply(config => {
 	return [200, financeDashboardAppDB.widgets];
+});
+
+mock.onGet('/api/finance-dashboard-app/incomes').reply(config => {
+	return [200, financeDashboardAppDB.incomes];
+});
+
+
+mock.onPost('/api/finance-dashboard-app/add-income').reply(request => {
+	const data = JSON.parse(request.data);
+	const newIncome = {
+		...data.newIncome,
+		id: FuseUtils.generateGUID()
+	};
+	financeDashboardAppDB.incomes = [...financeDashboardAppDB.incomes, newIncome];
+	return [200, newIncome];
+});
+
+mock.onPost('/api/finance-dashboard-app/update-income').reply(request => {
+	const data = JSON.parse(request.data);
+
+	financeDashboardAppDB.incomes = financeDashboardAppDB.incomes.map(income => {
+		if (data.income.id === income.id) {
+			return data.income;
+		}
+		return income;
+	});
+
+	return [200, data.income];
+});
+
+mock.onPost('/api/finance-dashboard-app/remove-income').reply(request => {
+	const data = JSON.parse(request.data);
+	const event = financeDashboardAppDB.incomes.find(_event => data.eventId === _event.id);
+	financeDashboardAppDB.incomes = financeDashboardAppDB.incomes.filter(_event => _event.id !== event.id);
+
+	return [200, event];
+});
+
+mock.onGet('/api/finance-dashboard-app/transactions').reply(config => {
+	return [200, financeDashboardAppDB.transactions];
 });
