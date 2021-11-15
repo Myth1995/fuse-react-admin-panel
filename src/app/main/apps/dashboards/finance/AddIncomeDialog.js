@@ -133,7 +133,7 @@ function AddIncomeDialog(props) {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {eventDialog.type === 'new' ? 'New Event' : 'Edit Event'}
+            {eventDialog.type === 'new' ? 'Add Income ' : 'Edit Event'}
           </Typography>
         </Toolbar>
       </AppBar>

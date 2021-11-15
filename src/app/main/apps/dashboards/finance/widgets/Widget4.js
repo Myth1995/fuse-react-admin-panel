@@ -18,7 +18,7 @@ function Widget4(props) {
       </div>
 
       <div className="flex flex-row flex-wrap items-center">
-        <div className="p-20 pr-25">
+        <div className="p-20 pr-25 pt-10">
           <Typography className="whitespace-nowrap mx-4" color="textSecondary">
             USD
           </Typography>
@@ -30,7 +30,7 @@ function Widget4(props) {
           </div>
         </div>
 
-        <div className="p-20 pr-25">
+        <div className="p-20 pr-25 pt-10">
           <Typography className="whitespace-nowrap mx-4" color="textSecondary">
             UZS
           </Typography>
@@ -42,7 +42,7 @@ function Widget4(props) {
           </div>
         </div>
 
-        <div className="p-20 pr-25">
+        <div className="p-20 pr-25 pt-10">
           <Typography className="whitespace-nowrap mx-4" color="textSecondary">
             GBP
           </Typography>

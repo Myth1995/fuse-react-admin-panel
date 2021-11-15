@@ -230,7 +230,7 @@ function FinanceDashboardApp() {
             <div className="widget flex w-full sm:w-2/3 p-16">
               <div className="w-full">
                 <motion.div variants={item} className="widget w-full p-16">
-                  <Widget8 />
+                  <Widget8 data={widgets.widget8}/>
                 </motion.div>
               </div>
             </div>
