@@ -147,8 +147,8 @@ function AddExpenseDialog(props) {
       name: name,
       currency: currency,
       amount: amount,
-      expense_date: formatISO(expenseDate),
-      expense_receipt: expenseReceipt
+      date: formatISO(expenseDate),
+      receipt: expenseReceipt
     }
     if (expenseDialog.type === 'new') {
       dispatch(addExpense(data));
@@ -184,6 +184,26 @@ function AddExpenseDialog(props) {
 
       <div noValidate>
         <DialogContent className='p-16 pb-0 sm:p-24 sm:pb-0'>
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Expense Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="mb-16"
+                value={currency}
+                label="Choose Currency"
+                onChange={handleCurrencyChange}
+              >
+                <MenuItem value={"USD"}>USD</MenuItem>
+                <MenuItem value={"UZS"}>UZS</MenuItem>
+                <MenuItem value={"EUR"}>EUR</MenuItem>
+                <MenuItem value={"GBP"}>GBP</MenuItem>
+                <MenuItem value={"RUB"}>RUB</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
           <Controller
             name="title"
             control={control}
@@ -246,26 +266,6 @@ function AddExpenseDialog(props) {
             )}
           />
 
-          {/* <Controller
-            name="allDay"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <FormControlLabel
-                className="mb-16"
-                label="All Day"
-                control={
-                  <Switch
-                    onChange={(ev) => {
-                      onChange(ev.target.checked);
-                    }}
-                    checked={value}
-                    name="allDay"
-                  />
-                }
-              />
-            )}
-          /> */}
-
           <DatePicker
             label="Add Expense Date"
             value={expenseDate}
@@ -274,23 +274,6 @@ function AddExpenseDialog(props) {
             }}
             renderInput={(params) => <TextField {...params} />}
           />
-          
-          {/* 
-          <Controller
-            name="end"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                renderInput={(_props) => (
-                  <TextField label="End" className="mt-8 mb-16 w-full" {..._props} />
-                )}
-                minDate={start}
-              />
-            )}
-          /> */}
 
           <Controller
             name="extendedProps.desc"
