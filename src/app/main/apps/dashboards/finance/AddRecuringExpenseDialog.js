@@ -7,10 +7,8 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
-import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,7 +18,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import DatePicker from '@mui/lab/DatePicker';
-import { DateTimePicker } from '@mui/lab';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
@@ -32,7 +29,6 @@ import {
   updateRecuringExpense,
   addRecuringExpense,
 } from './store/recuringExpensesSlice';
-import { names } from 'keycode';
 
 const defaultValues = {
   id: FuseUtils.generateGUID(),
@@ -41,10 +37,7 @@ const defaultValues = {
   currency: '',
   amount: '',
   expenseReceipt: '',
-  // allDay: true,
   expenseDate: formatISO(new Date()),
-  // end: formatISO(new Date()),
-  // extendedProps: { desc: '' },
 };
 
 /**
@@ -71,6 +64,31 @@ function AddRecuringExpenseDialog(props) {
   const end = watch('end');
   const id = watch('id');
 
+  const[recureExpenseType, setRecureExpenseType] = useState('');
+  const handleRecureExpenseTypeChange = (event) => {
+    setRecureExpenseType(event.target.value);
+  }
+
+  const [salaryType, setSalaryType] = useState('');
+  const handleSalaryTypeChange = (event) => {
+    setSalaryType(event.target.value);
+  };
+
+  const [officeExpensesType, setOfficeExpensesType] = useState('');
+  const handleOfficeExpensesTypeChange = (event) => {
+    setOfficeExpensesType(event.target.value);
+  };
+
+  const [rentType, setRentType] = useState('');
+  const handleRentTypeChange = (event) => {
+    setRentType(event.target.value);
+  };
+
+  const [otherType, setOtherType] = useState('');
+  const handleOtherTypeChange = (event) => {
+    setOtherType(event.target.value);
+  };
+
   const[name, setName] = useState('');
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -86,11 +104,26 @@ function AddRecuringExpenseDialog(props) {
     setAmount(event.target.value);
   };
 
-  const [expenseDate, setExpenseDate] = useState(null);
+  const [purpose, setPurpose] = useState('');
+  const handlePurposeChange = (event) => {
+    setPurpose(event.target.value);
+  };
+
+  const [date, setDate] = useState(null);
+
+  function initAllConst () {
+      setRecureExpenseType('');
+      setSalaryType('');
+      setOfficeExpensesType('');
+      setRentType('');
+      setOtherType('');
+      setName('');
+      setCurrencyType('');
+      setAmount(0);
+      setPurpose('');
+      setDate(null);
+  }
   
-  useEffect(() => {
-    console.log("expenseDate: ", expenseDate);
-  }, [expenseDate]);
   /**
    * Initialize Dialog with Data
    */
@@ -138,14 +171,20 @@ function AddRecuringExpenseDialog(props) {
   function onSubmit(ev) {
     ev.preventDefault();
     const data = {
-      type: 1,
+      type: recureExpenseType,
       name: name,
       currency: currency,
       amount: amount,
-      date: formatISO(expenseDate),
+      date: formatISO(date === null ? new Date() : date),
+      purpose: purpose,
+      salaryType: salaryType,
+      officeExpensesType: officeExpensesType,
+      rentType: rentType,
+      otherType: otherType
     }
     if (expenseDialog.type === 'new') {
       dispatch(addRecuringExpense(data));
+      initAllConst();
     } else {
       dispatch(updateRecuringExpense({ ...expenseDialog.data, ...data }));
     }
@@ -178,6 +217,102 @@ function AddRecuringExpenseDialog(props) {
 
       <div noValidate>
         <DialogContent className='p-16 pb-0 sm:p-24 sm:pb-0'>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Choose Recuring Expense Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="mb-16"
+                value={recureExpenseType}
+                label="Choose Recuring Expense Type"
+                onChange={handleRecureExpenseTypeChange}
+              >
+                <MenuItem value={1}>Salary</MenuItem>
+                <MenuItem value={2}>Office Expenses</MenuItem>
+                <MenuItem value={3}>Rent</MenuItem>
+                <MenuItem value={4}>Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          {recureExpenseType === 1 ? 
+            (<Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Choose Salary Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="mb-16"
+                  value={salaryType}
+                  label="Choose Salary Type"
+                  onChange={handleSalaryTypeChange}
+                >
+                  <MenuItem value={"monthly"}>Monthly</MenuItem>
+                  <MenuItem value={"annually"}>Annually</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>) : (<></>)
+          }
+
+          {recureExpenseType === 2 ? 
+            (<Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Choose Office Expenses Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="mb-16"
+                  value={officeExpensesType}
+                  label="Choose Office Expense Type"
+                  onChange={handleOfficeExpensesTypeChange}
+                >
+                  <MenuItem value={"monthly"}>Monthly</MenuItem>
+                  <MenuItem value={"yearly"}>Yearly</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>) : (<></>)
+          }
+
+          {recureExpenseType === 3 ? 
+            (<Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Choose Rent Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="mb-16"
+                  value={rentType}
+                  label="Choose Rent Type"
+                  onChange={handleRentTypeChange}
+                >
+                  <MenuItem value={"monthly"}>Monthly</MenuItem>
+                  <MenuItem value={"annually"}>Annually</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>) : (<></>)
+          }
+
+          {recureExpenseType === 4 ? 
+            (<Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Choose Other Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  className="mb-16"
+                  value={otherType}
+                  label="Choose Other Type"
+                  onChange={handleOtherTypeChange}
+                >
+                  <MenuItem value={"monthly"}>Monthly</MenuItem>
+                  <MenuItem value={"annually"}>Annually</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>) : (<></>)
+          }
+
           <Controller
             name="title"
             control={control}
@@ -240,11 +375,29 @@ function AddRecuringExpenseDialog(props) {
             )}
           />
 
+          {recureExpenseType === 4 ? 
+            (<Controller
+              name="Purpose"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="purpose"
+                  label="Purpose"
+                  className="mb-16"
+                  variant="outlined"
+                  value={purpose}
+                  onChange={handlePurposeChange}
+                  fullWidth
+                />
+              )}
+            />) : (<></>)}
+
           <DatePicker
             label="Add Expense Date"
-            value={expenseDate}
+            value={date}
             onChange={(newValue) => {
-              setExpenseDate(newValue);
+              setDate(newValue);
             }}
             renderInput={(params) => <TextField {...params} />}
           />
