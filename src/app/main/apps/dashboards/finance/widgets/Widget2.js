@@ -20,7 +20,7 @@ function Widget2(props) {
       <div className="flex flex-row flex-wrap items-center">
         <div className="p-20 pr-25">
           <Typography className="whitespace-nowrap mx-4" color="textSecondary">
-            Card Limit
+            Income
           </Typography>
           
           <div className="flex flex-row flex-wrap items-center mt-12">

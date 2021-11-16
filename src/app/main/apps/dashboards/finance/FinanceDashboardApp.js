@@ -1,4 +1,6 @@
 import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import withReducer from 'app/store/withReducer';
 import { useEffect, useState } from 'react';
@@ -30,9 +32,15 @@ function FinanceDashboardApp() {
   const widgets = useSelector(selectWidgetsEntities);
 
   // @author Vodmot
-  const [ open, setOpen ] = useState(false);
-  // const emails = ['username@gmail.com', 'user02@gmail.com'];
-  // const [selectedValue, setSelectedValue] = useState(emails[1]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   useEffect(() => {
     dispatch(getWidgets());
@@ -142,12 +150,24 @@ function FinanceDashboardApp() {
               // color="secondary"
               // className="w-full"
               variant="outlined"
-              onClick={(ev) => dispatch(openAddIncomeDialog())}
+              onClick={handleClick}
             >
               <Icon>report</Icon>
               &nbsp;
               <span className="hidden sm:flex">Report</span>
             </Button>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
+            >
+              <MenuItem onClick={handleClose}>Export PDF</MenuItem>
+              <MenuItem onClick={handleClose}>Export Excel</MenuItem>
+            </Menu>
           </div>
 
           <div className="flex flex-col min-w-0 sm:w-1/6 pr-5">

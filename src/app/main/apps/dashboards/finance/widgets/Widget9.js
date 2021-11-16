@@ -94,7 +94,7 @@ function Widget4(props) {
       </div>
 
       <div className="flex justify-center">
-        <Typography class="h4 p-20">
+        <Typography className="h4 p-20">
           Exceeded your personal limit! Be careful next month.
         </Typography>
       </div>

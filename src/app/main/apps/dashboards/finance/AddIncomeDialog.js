@@ -70,14 +70,34 @@ function AddincomeDialog(props) {
   const end = watch('end');
   const id = watch('id');
 
-  const[name, setName] = useState('');
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const [incomeType, setIncomeType] = useState('');
+  const handleIncomeTypeChange = (event) => {
+    setIncomeType(event.target.value);
+  };
+
+  const[orgName, setOrgName] = useState('');
+  const handleOrgNameChange = (event) => {
+    setOrgName(event.target.value);
+  }
+
+  const[studentName, setStudentName] = useState('');
+  const handleStudentNameChange = (event) => {
+    setStudentName(event.target.value);
   }
 
   const [cashType, setCashType] = useState('');
   const handleCashTypeChange = (event) => {
     setCashType(event.target.value);
+  };
+
+  const [feeType, setFeeType] = useState('');
+  const handleFeeTypeChange = (event) => {
+    setFeeType(event.target.value);
+  };
+
+  const [commissionType, setCommissionType] = useState('');
+  const handleCommissionTypeChange = (event) => {
+    setCommissionType(event.target.value);
   };
 
   const [currency, setCurrencyType] = useState('');
@@ -147,13 +167,16 @@ function AddincomeDialog(props) {
   function onSubmit(ev) {
     ev.preventDefault();
     const data = {
-      income_type: 1,
-      name: name,
-      cash_type: cashType,
+      incomeType: incomeType,
+      orgName: orgName,
+      studentName: studentName,
+      feeType: feeType,
+      cashType: cashType,
       currency: currency,
       amount: amount,
-      income_date: formatISO(incomeDate),
-      income_receipt: incomeReceipt
+      commissionType: commissionType,
+      date: formatISO(incomeDate),
+      receipt: incomeReceipt
     }
     if (incomeDialog.type === 'new') {
       dispatch(addIncome(data));
@@ -189,33 +212,119 @@ function AddincomeDialog(props) {
 
       <div noValidate>
         <DialogContent className='p-16 pb-0 sm:p-24 sm:pb-0'>
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                id="title"
-                label="Name of organization or person"
-                className="mt-8 mb-16"
-                error={!!errors.title}
-                helperText={errors?.title?.message}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                autoFocus
-                required
-                value={name}
-                onChange={handleNameChange}
-                fullWidth
-              />
-            )}
-          />
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Income Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={incomeType}
+                label="Income Type"
+                className="mb-16"
+                onChange={handleIncomeTypeChange}
+              >
+                <MenuItem value={1}>Direct income</MenuItem>
+                <MenuItem value={2}>Service fee</MenuItem>
+                <MenuItem value={3}>Commission</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          
+          {incomeType !== 2 ?
+            (<Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="title"
+                  label="Name of organization or person"
+                  className="mt-8 mb-16"
+                  error={!!errors.title}
+                  helperText={errors?.title?.message}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  autoFocus
+                  required
+                  value={orgName}
+                  onChange={handleOrgNameChange}
+                  fullWidth
+                />
+              )}
+            />) : ( <></> )
+          }
+
+          {((incomeType === 2) || (incomeType === 3 && commissionType === "recuitment")) ?
+            (<Controller
+              name="student"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="student"
+                  label="Name or ID of student"
+                  className="mt-8 mb-16"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  value={studentName}
+                  onChange={handleStudentNameChange}
+                  fullWidth
+                />
+              )}
+            />) : ( <></> )
+          }
+
+          {incomeType === 2 ? (
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Fee Category</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={feeType}
+                  label="Fee Category"
+                  className="mb-16"
+                  onChange={handleFeeTypeChange}
+                >
+                  <MenuItem value={"consulting"}>consulting fee</MenuItem>
+                  <MenuItem value={"visa_support"}>visa support fee</MenuItem>
+                  <MenuItem value={"translation"}>translation fee</MenuItem>
+                  <MenuItem value={"other"}>Other</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          ) : (
+            <></>
+          )}
+
+          {incomeType === 3 ? (
+            <Box sx={{ minWidth: 120 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Commission Type</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={commissionType}
+                  label="Commission Type"
+                  className="mb-16"
+                  onChange={handleCommissionTypeChange}
+                >
+                  <MenuItem value={"marketing"}>Marketing</MenuItem>
+                  <MenuItem value={"recuitment"}>Recuitment</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          ) : (
+            <Box></Box>
+          )}
 
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">Cash Type</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
