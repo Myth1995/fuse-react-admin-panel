@@ -33,6 +33,7 @@ import {
   addIncome,
 } from './store/incomesSlice';
 import { names } from 'keycode';
+import { setDate } from 'date-fns';
 
 const defaultValues = {
   id: FuseUtils.generateGUID(),
@@ -110,16 +111,16 @@ function AddincomeDialog(props) {
     setAmount(event.target.value);
   };
 
-  const [incomeDate, setIncomeDate] = useState(null);
+  const [date, setDate] = useState(null);
 
-  const [incomeReceipt, setIncomeReceipt] = useState('');
-  const handleIncomeReceiptChange = (event) => {
-    setIncomeReceipt(event.target.value);
+  const [receipt, setReceipt] = useState('');
+  const handleReceiptChange = (event) => {
+    setReceipt(event.target.value);
   }
   
   useEffect(() => {
-    console.log("incomeDate: ", incomeDate);
-  }, [incomeDate]);
+    console.log("incomeDate: ", date);
+  }, [date]);
   /**
    * Initialize Dialog with Data
    */
@@ -161,6 +162,19 @@ function AddincomeDialog(props) {
       : dispatch(closeNewIncomeDialog());
   }
 
+  function initAllConst () {
+    setIncomeType('');
+    setOrgName('');
+    setCashType('');
+    setCurrencyType('');
+    setAmount(0);
+    setDate(null);
+    setReceipt('');
+    setStudentName('');
+    setFeeType('');
+    setCommissionType('');
+  }
+
   /**
    * Form Submit
    */
@@ -175,11 +189,12 @@ function AddincomeDialog(props) {
       currency: currency,
       amount: amount,
       commissionType: commissionType,
-      date: formatISO(incomeDate),
-      receipt: incomeReceipt
+      date: formatISO(date === null ? new Date() : date),
+      receipt: receipt
     }
     if (incomeDialog.type === 'new') {
       dispatch(addIncome(data));
+      initAllConst();
     } else {
       dispatch(updateEvent({ ...incomeDialog.data, ...data }));
     }
@@ -400,9 +415,9 @@ function AddincomeDialog(props) {
 
           <DatePicker
             label="Add Income Date"
-            value={incomeDate}
+            value={date}
             onChange={(newValue) => {
-              setIncomeDate(newValue);
+              setDate(newValue);
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -438,8 +453,8 @@ function AddincomeDialog(props) {
                 rows={5}
                 variant="outlined"
                 fullWidth
-                value={incomeReceipt}
-                onChange={handleIncomeReceiptChange}
+                value={receipt}
+                onChange={handleReceiptChange}
               />
             )}
           />

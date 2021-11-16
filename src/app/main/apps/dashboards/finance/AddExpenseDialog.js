@@ -67,13 +67,16 @@ function AddExpenseDialog(props) {
 
   const { isValid, dirtyFields, errors } = formState;
 
-  const start = watch('start');
-  const end = watch('end');
   const id = watch('id');
 
-  const[name, setName] = useState('');
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const [expenseType, setExpenseType] = useState('');
+  const handleExpenseChange = (event) => {
+    setExpenseType(event.target.value);
+  };
+
+  const[orgName, setOrgName] = useState('');
+  const handleOrgNameChange = (event) => {
+    setOrgName(event.target.value);
   }
 
   const [currency, setCurrencyType] = useState('');
@@ -86,6 +89,21 @@ function AddExpenseDialog(props) {
     setAmount(event.target.value);
   };
 
+  const [purpose, setPurpose] = useState('');
+  const handlePurposeChange = (event) => {
+    setPurpose(event.target.value);
+  };
+
+  const [studentName, setStudentName] = useState('');
+  const handleStudentNameChange = (event) => {
+    setStudentName(event.target.value);
+  };
+
+  const [reason, setReason] = useState('');
+  const handleReasonChange = (event) => {
+    setReason(event.target.value);
+  };
+
   const [expenseDate, setExpenseDate] = useState(null);
 
   const [expenseReceipt, setExpenseReceipt] = useState('');
@@ -93,6 +111,18 @@ function AddExpenseDialog(props) {
     setExpenseReceipt(event.target.value);
   }
   
+  const initAllConst = () => {
+    setExpenseType('');
+    setOrgName('');
+    setPurpose('');
+    setCurrencyType('');
+    setAmount(0);
+    setExpenseDate(null);
+    setExpenseReceipt('');
+    setStudentName('');
+    setReason('');
+  }
+
   useEffect(() => {
     console.log("expenseDate: ", expenseDate);
   }, [expenseDate]);
@@ -143,15 +173,19 @@ function AddExpenseDialog(props) {
   function onSubmit(ev) {
     ev.preventDefault();
     const data = {
-      expense_type: 1,
-      name: name,
+      expenseType: expenseType,
+      orgName: orgName,
+      studentName: studentName,
       currency: currency,
       amount: amount,
-      date: formatISO(expenseDate),
-      receipt: expenseReceipt
+      date: formatISO(expenseDate === null ? new Date() : expenseDate),
+      receipt: expenseReceipt,
+      purpose: purpose,
+      reason: reason
     }
     if (expenseDialog.type === 'new') {
       dispatch(addExpense(data));
+      initAllConst();
     } else {
       dispatch(updateExpense({ ...expenseDialog.data, ...data }));
     }
@@ -191,109 +225,146 @@ function AddExpenseDialog(props) {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 className="mb-16"
-                value={currency}
-                label="Choose Currency"
-                onChange={handleCurrencyChange}
+                value={expenseType}
+                label="Choose Expense Type"
+                onChange={handleExpenseChange}
               >
-                <MenuItem value={"USD"}>USD</MenuItem>
-                <MenuItem value={"UZS"}>UZS</MenuItem>
-                <MenuItem value={"EUR"}>EUR</MenuItem>
-                <MenuItem value={"GBP"}>GBP</MenuItem>
-                <MenuItem value={"RUB"}>RUB</MenuItem>
+                <MenuItem value={1}>Service</MenuItem>
+                <MenuItem value={2}>Stationary</MenuItem>
+                <MenuItem value={3}>Refund</MenuItem>
+                <MenuItem value={4}>Other</MenuItem>
               </Select>
             </FormControl>
           </Box>
+          { expenseType !== 3 ? (
+            <><Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  id="title"
+                  label="Name of company"
+                  className="mt-8 mb-16"
+                  // error={!!errors.title}
+                  // helperText={errors?.title?.message}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  autoFocus
+                  required
+                  value={orgName}
+                  onChange={handleOrgNameChange}
+                  fullWidth />
+              )} />
 
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                id="title"
-                label="Name of company"
-                className="mt-8 mb-16"
-                // error={!!errors.title}
-                // helperText={errors?.title?.message}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                variant="outlined"
-                autoFocus
-                required
-                value={name}
-                onChange={handleNameChange}
-                fullWidth
-              />
-            )}
-          />
+              { expenseType !== 4 ? 
+                (<Controller
+                  name="purpose"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      id="purpose"
+                      label="Purpose"
+                      className="mb-16"
+                      variant="outlined"
+                      value={purpose}
+                      onChange={handlePurposeChange}
+                      fullWidth/>
+                  )} />) : (<></>)
+              }
 
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Choose Currency</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                className="mb-16"
-                value={currency}
-                label="Choose Currency"
-                onChange={handleCurrencyChange}
-              >
-                <MenuItem value={"USD"}>USD</MenuItem>
-                <MenuItem value={"UZS"}>UZS</MenuItem>
-                <MenuItem value={"EUR"}>EUR</MenuItem>
-                <MenuItem value={"GBP"}>GBP</MenuItem>
-                <MenuItem value={"RUB"}>RUB</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Choose Currency</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    className="mb-16"
+                    value={currency}
+                    label="Choose Currency"
+                    onChange={handleCurrencyChange}
+                  >
+                    <MenuItem value={"USD"}>USD</MenuItem>
+                    <MenuItem value={"UZS"}>UZS</MenuItem>
+                    <MenuItem value={"EUR"}>EUR</MenuItem>
+                    <MenuItem value={"GBP"}>GBP</MenuItem>
+                    <MenuItem value={"RUB"}>RUB</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+              <Controller
+                name="Amount"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="amount"
+                    label="Amount"
+                    className="mb-16"
+                    variant="outlined"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    fullWidth
+                    type="number" />
+                )} />
+              <DatePicker
+                label="Add Expense Date"
+                value={expenseDate}
+                onChange={(newValue) => {
+                  setExpenseDate(newValue);
+                } }
+                renderInput={(params) => <TextField {...params} />} /><Controller
+                name="extendedProps.desc"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    className="mt-8 mb-16"
+                    id="desc"
+                    label="Upload Receipt"
+                    type="text"
+                    multiline
+                    rows={5}
+                    variant="outlined"
+                    fullWidth
+                    value={expenseReceipt}
+                    onChange={handleExpenseReceiptChange} />
+            )} /></>) : 
+            (<>
+              <Controller
+                name="studentName"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="studentName"
+                    label="Name or ID of the student"
+                    className="mb-16"
+                    variant="outlined"
+                    value={studentName}
+                    onChange={handleStudentNameChange}
+                    fullWidth/>
+                )} />
 
-          <Controller
-            name="Amount"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                id="amount"
-                label="Amount"
-                className="mb-16"
-                variant="outlined"
-                value={amount}
-                onChange={handleAmountChange}
-                fullWidth
-                type="number"
-              />
-            )}
-          />
-
-          <DatePicker
-            label="Add Expense Date"
-            value={expenseDate}
-            onChange={(newValue) => {
-              setExpenseDate(newValue);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-
-          <Controller
-            name="extendedProps.desc"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                className="mt-8 mb-16"
-                id="desc"
-                label="Upload Receipt"
-                type="text"
-                multiline
-                rows={5}
-                variant="outlined"
-                fullWidth
-                value={expenseReceipt}
-                onChange={handleExpenseReceiptChange}
-              />
-            )}
-          />
+              <Controller
+                name="reason"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    id="reason"
+                    label="Reason for refund"
+                    className="mb-16"
+                    variant="outlined"
+                    value={reason}
+                    onChange={handleReasonChange}
+                    fullWidth/>
+                )} />
+            </>)
+          }
         </DialogContent>
 
         {expenseDialog.type === 'new' ? (
