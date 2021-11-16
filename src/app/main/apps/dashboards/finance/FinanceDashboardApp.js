@@ -18,9 +18,12 @@ import Widget8 from './widgets/Widget8';
 import Widget9 from './widgets/Widget9';
 // import Widget11 from './widgets/Widget11';
 import AddIncomeDialog from './AddIncomeDialog';
+import AddExpenseDialog from './AddExpenseDialog';
+import AddRecuringExpenseDialog from './AddRecuringExpenseDialog';
 import Icon from '@mui/material/Icon';
 import { openNewIncomeDialog } from './store/incomesSlice';
-
+import { openNewExpenseDialog } from './store/expensesSlice';
+import { openNewRecuringExpenseDialog } from './store/recuringExpensesSlice';
 
 function FinanceDashboardApp() {
   const dispatch = useDispatch();
@@ -92,10 +95,7 @@ function FinanceDashboardApp() {
               // color="secondary"
               // className="w-full"
               variant="outlined"
-              onClick={(ev) => dispatch(openNewIncomeDialog({
-                start: new Date(),
-                end: new Date(),
-              }))}
+              onClick={(ev) => dispatch(openNewIncomeDialog({}))}
               // onClick={()=>{
                 // setOpen(!open); 
                 // setSelectedValue(selectedValue);
@@ -114,7 +114,7 @@ function FinanceDashboardApp() {
               // color="secondary"
               // className="w-full"
               variant="outlined"
-              onClick={(ev) => dispatch(openAddIncomeDialog())}
+              onClick={(ev) => dispatch(openNewExpenseDialog())}
             >
               <Icon>poll</Icon>
               &nbsp;
@@ -128,7 +128,7 @@ function FinanceDashboardApp() {
               // color="secondary"
               // className="w-full"
               variant="outlined"
-              onClick={(ev) => dispatch(openAddIncomeDialog())}
+              onClick={(ev) => dispatch(openNewRecuringExpenseDialog())}
             >
               <Icon>poll</Icon>
               &nbsp;
@@ -144,6 +144,8 @@ function FinanceDashboardApp() {
               variant="outlined"
               onClick={(ev) => dispatch(openAddIncomeDialog())}
             >
+              <Icon>report</Icon>
+              &nbsp;
               <span className="hidden sm:flex">Report</span>
             </Button>
           </div>
@@ -247,6 +249,8 @@ function FinanceDashboardApp() {
     </div>
     {/* <AddIncomeDialog open={ open } setOpen = { setOpen }/> */}
     <AddIncomeDialog />
+    <AddExpenseDialog />
+    <AddRecuringExpenseDialog />
     </>
   );
 }

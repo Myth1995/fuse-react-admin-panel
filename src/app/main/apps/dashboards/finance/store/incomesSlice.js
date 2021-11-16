@@ -54,7 +54,7 @@ export const {
 const incomesSlice = createSlice({
   name: 'financeDashboardApp/incomes',
   initialState: incomesAdapter.getInitialState({
-    eventDialog: {
+    incomeDialog: {
       type: 'new',
       props: {
         open: false,
@@ -71,14 +71,12 @@ const incomesSlice = createSlice({
             open: true,
           },
           data: {
-            start: formatISO(event.start),
-            end: formatISO(event.end),
           },
         };
         return { payload };
       },
       reducer: (state, action) => {
-        state.eventDialog = action.payload;
+        state.incomeDialog = action.payload;
       },
     },
     openEditIncomeDialog: {
@@ -90,18 +88,16 @@ const incomesSlice = createSlice({
           },
           data: {
             ...event,
-            start: formatISO(event.start),
-            end: formatISO(event.end),
           },
         };
         return { payload };
       },
       reducer: (state, action) => {
-        state.eventDialog = action.payload;
+        state.incomeDialog = action.payload;
       },
     },
     closeNewIncomeDialog: (state, action) => {
-      state.eventDialog = {
+      state.incomeDialog = {
         type: 'new',
         props: {
           open: false,
@@ -110,7 +106,7 @@ const incomesSlice = createSlice({
       };
     },
     closeEditIncomeDialog: (state, action) => {
-      state.eventDialog = {
+      state.incomeDialog = {
         type: 'edit',
         props: {
           open: false,

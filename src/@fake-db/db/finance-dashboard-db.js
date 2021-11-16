@@ -881,6 +881,22 @@ const financeDashboardAppDB = {
 			notes: ''
 		},
 	],
+	expenses: [
+		{
+			id: '5725a680b3249760ea21de52',
+			name: 'Abbott',
+			lastName: 'Keitch',
+			avatar: 'assets/images/avatars/Abbott.jpg',
+			nickname: 'Royalguard',
+			company: 'Saois',
+			jobTitle: 'Digital Archivist',
+			email: 'abbott@withinpixels.com',
+			phone: '+1-202-555-0175',
+			address: '933 8th Street Stamford, CT 06902',
+			birthday: undefined,
+			notes: ''
+		},
+	],
 	transactions: [
 		{
 			id: '1',
@@ -971,7 +987,7 @@ mock.onGet('/api/finance-dashboard-app/incomes').reply(config => {
 mock.onPost('/api/finance-dashboard-app/add-income').reply(request => {
 	const data = JSON.parse(request.data);
 	console.log(data);
-	return instance.post('/income/add', {
+	return instance.post('/finance/add-income', {
 		data: data
 	})
 	.then(res => {
@@ -998,6 +1014,52 @@ mock.onPost('/api/finance-dashboard-app/remove-income').reply(request => {
 	financeDashboardAppDB.incomes = financeDashboardAppDB.incomes.filter(_event => _event.id !== event.id);
 
 	return [200, event];
+});
+
+mock.onGet('/api/finance-dashboard-app/expense').reply(config => {
+	return [200, financeDashboardAppDB.expenses];
+});
+
+mock.onPost('/api/finance-dashboard-app/add-expense').reply(request => {
+	const data = JSON.parse(request.data);
+	console.log(data);
+	return instance.post('/finance/add-expense', {
+		data: data
+	})
+	.then(res => {
+		return [200, financeDashboardAppDB.expenses];
+	});
+});
+
+mock.onPost('/api/finance-dashboard-app/update-expense').reply(request => {
+	const data = JSON.parse(request.data);
+
+	financeDashboardAppDB.expenses = financeDashboardAppDB.expenses.map(expense => {
+		if (data.expense.id === expense.id) {
+			return data.expense;
+		}
+		return expense;
+	});
+
+	return [200, data.expenses];
+});
+
+mock.onPost('/api/finance-dashboard-app/remove-expense').reply(request => {
+	const data = JSON.parse(request.data);
+	const event = financeDashboardAppDB.expenses.find(_event => data.eventId === _event.id);
+	financeDashboardAppDB.expenses = financeDashboardAppDB.expenses.filter(_event => _event.id !== event.id);
+
+	return [200, event];
+});
+
+mock.onPost('/api/finance-dashboard-app/add-recuring-expense').reply(request => {
+	const data = JSON.parse(request.data);
+	return instance.post('/finance/add-recuring-expense', {
+		data: data
+	})
+	.then(res => {
+		return [200];
+	});
 });
 
 mock.onGet('/api/finance-dashboard-app/transactions').reply(config => {

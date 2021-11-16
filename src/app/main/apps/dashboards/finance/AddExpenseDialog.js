@@ -26,12 +26,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import _ from '@lodash';
 import {
-  removeIncome,
-  closeNewIncomeDialog,
-  closeEditIncomeDialog,
-  updateIncome,
-  addIncome,
-} from './store/incomesSlice';
+  removeExpense,
+  closeNewExpenseDialog,
+  closeEditExpenseDialog,
+  updateExpense,
+  addExpense,
+} from './store/expensesSlice';
 import { names } from 'keycode';
 
 const defaultValues = {
@@ -40,9 +40,9 @@ const defaultValues = {
   cashType: '',
   currency: '',
   amount: '',
-  incomeReceipt: '',
+  expenseReceipt: '',
   // allDay: true,
-  incomeDate: formatISO(new Date()),
+  expenseDate: formatISO(new Date()),
   // end: formatISO(new Date()),
   // extendedProps: { desc: '' },
 };
@@ -54,9 +54,10 @@ const schema = yup.object().shape({
   title: yup.string().required('You must enter a title'),
 });
 
-function AddincomeDialog(props) {
+function AddExpenseDialog(props) {
   const dispatch = useDispatch();
-  const incomeDialog = useSelector(({ financeDashboardApp }) => financeDashboardApp.incomes.incomeDialog);
+  
+  const expenseDialog = useSelector(({ financeDashboardApp }) => financeDashboardApp.expenses.expenseDialog);
 
   const { reset, formState, watch, control, getValues } = useForm({
     defaultValues,
@@ -75,11 +76,6 @@ function AddincomeDialog(props) {
     setName(event.target.value);
   }
 
-  const [cashType, setCashType] = useState('');
-  const handleCashTypeChange = (event) => {
-    setCashType(event.target.value);
-  };
-
   const [currency, setCurrencyType] = useState('');
   const handleCurrencyChange = (event) => {
     setCurrencyType(event.target.value);
@@ -90,16 +86,16 @@ function AddincomeDialog(props) {
     setAmount(event.target.value);
   };
 
-  const [incomeDate, setIncomeDate] = useState(null);
+  const [expenseDate, setExpenseDate] = useState(null);
 
-  const [incomeReceipt, setIncomeReceipt] = useState('');
-  const handleIncomeReceiptChange = (event) => {
-    setIncomeReceipt(event.target.value);
+  const [expenseReceipt, setExpenseReceipt] = useState('');
+  const handleExpenseReceiptChange = (event) => {
+    setExpenseReceipt(event.target.value);
   }
   
   useEffect(() => {
-    console.log("incomeDate: ", incomeDate);
-  }, [incomeDate]);
+    console.log("expenseDate: ", expenseDate);
+  }, [expenseDate]);
   /**
    * Initialize Dialog with Data
    */
@@ -107,38 +103,38 @@ function AddincomeDialog(props) {
     /**
      * Dialog type: 'edit'
      */
-    if (incomeDialog.type === 'edit' && incomeDialog.data) {
-      reset({ ...incomeDialog.data });
+    if (expenseDialog.type === 'edit' && expenseDialog.data) {
+      reset({ ...expenseDialog.data });
     }
 
     /**
      * Dialog type: 'new'
      */
-    if (incomeDialog.type === 'new') {
+    if (expenseDialog.type === 'new') {
       reset({
         ...defaultValues,
-        ...incomeDialog.data,
+        ...expenseDialog.data,
         id: FuseUtils.generateGUID(),
       });
     }
-  }, [incomeDialog.data, incomeDialog.type, reset]);
+  }, [expenseDialog.data, expenseDialog.type, reset]);
 
   /**
    * On Dialog Open
    */
   useEffect(() => {
-    if (incomeDialog.props.open) {
+    if (expenseDialog.props.open) {
       initDialog();
     }
-  }, [incomeDialog.props.open, initDialog]);
+  }, [expenseDialog.props.open, initDialog]);
 
   /**
    * Close Dialog
    */
   function closeComposeDialog() {
-    return incomeDialog.type === 'edit'
-      ? dispatch(closeEditIncomeDialog())
-      : dispatch(closeNewIncomeDialog());
+    return expenseDialog.type === 'edit'
+      ? dispatch(closeEditExpenseDialog())
+      : dispatch(closeNewExpenseDialog());
   }
 
   /**
@@ -147,18 +143,17 @@ function AddincomeDialog(props) {
   function onSubmit(ev) {
     ev.preventDefault();
     const data = {
-      income_type: 1,
+      expense_type: 1,
       name: name,
-      cash_type: cashType,
       currency: currency,
       amount: amount,
-      income_date: formatISO(incomeDate),
-      income_receipt: incomeReceipt
+      expense_date: formatISO(expenseDate),
+      expense_receipt: expenseReceipt
     }
-    if (incomeDialog.type === 'new') {
-      dispatch(addIncome(data));
+    if (expenseDialog.type === 'new') {
+      dispatch(addExpense(data));
     } else {
-      dispatch(updateEvent({ ...incomeDialog.data, ...data }));
+      dispatch(updateExpense({ ...expenseDialog.data, ...data }));
     }
     closeComposeDialog();
   }
@@ -173,7 +168,7 @@ function AddincomeDialog(props) {
 
   return (
     <Dialog
-      {...incomeDialog.props}
+      {...expenseDialog.props}
       onClose={closeComposeDialog}
       fullWidth
       maxWidth="xs"
@@ -182,7 +177,7 @@ function AddincomeDialog(props) {
       <AppBar position="static" elevation={0}>
         <Toolbar className="flex w-full">
           <Typography variant="subtitle1" color="inherit">
-            {incomeDialog.type === 'new' ? 'Add Income ' : 'Edit Event'}
+            {expenseDialog.type === 'new' ? 'Add Expense ' : 'Edit Event'}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -196,10 +191,10 @@ function AddincomeDialog(props) {
               <TextField
                 {...field}
                 id="title"
-                label="Name of organization or person"
+                label="Name of company"
                 className="mt-8 mb-16"
-                error={!!errors.title}
-                helperText={errors?.title?.message}
+                // error={!!errors.title}
+                // helperText={errors?.title?.message}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -212,24 +207,6 @@ function AddincomeDialog(props) {
               />
             )}
           />
-
-          <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Type</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={cashType}
-                label="Type"
-                className="mb-16"
-                onChange={handleCashTypeChange}
-              >
-                <MenuItem value={"Cash"}>Cash</MenuItem>
-                <MenuItem value={"Bank"}>Bank Transfer</MenuItem>
-                <MenuItem value={"Other"}>Other</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
 
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
@@ -290,10 +267,10 @@ function AddincomeDialog(props) {
           /> */}
 
           <DatePicker
-            label="Add Income Date"
-            value={incomeDate}
+            label="Add Expense Date"
+            value={expenseDate}
             onChange={(newValue) => {
-              setIncomeDate(newValue);
+              setExpenseDate(newValue);
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -329,14 +306,14 @@ function AddincomeDialog(props) {
                 rows={5}
                 variant="outlined"
                 fullWidth
-                value={incomeReceipt}
-                onChange={handleIncomeReceiptChange}
+                value={expenseReceipt}
+                onChange={handleExpenseReceiptChange}
               />
             )}
           />
         </DialogContent>
 
-        {incomeDialog.type === 'new' ? (
+        {expenseDialog.type === 'new' ? (
           <DialogActions className="justify-between px-8 sm:px-16 pb-16">
             <Button
               variant="contained"
@@ -367,4 +344,4 @@ function AddincomeDialog(props) {
   );
 }
 
-export default AddincomeDialog;
+export default AddExpenseDialog;
