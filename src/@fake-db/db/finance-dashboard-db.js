@@ -1,4 +1,5 @@
 import mock from '../mock';
+import instance from '../axiosConfig';
 
 const financeDashboardAppDB = {
 	widgets: [
@@ -969,12 +970,13 @@ mock.onGet('/api/finance-dashboard-app/incomes').reply(config => {
 
 mock.onPost('/api/finance-dashboard-app/add-income').reply(request => {
 	const data = JSON.parse(request.data);
-	const newIncome = {
-		...data.newIncome,
-		id: FuseUtils.generateGUID()
-	};
-	financeDashboardAppDB.incomes = [...financeDashboardAppDB.incomes, newIncome];
-	return [200, newIncome];
+	console.log(data);
+	return instance.post('/income/add', {
+		data: data
+	})
+	.then(res => {
+		return [200, financeDashboardAppDB.incomes];
+	});
 });
 
 mock.onPost('/api/finance-dashboard-app/update-income').reply(request => {

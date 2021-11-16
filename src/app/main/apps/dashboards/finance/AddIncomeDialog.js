@@ -14,8 +14,14 @@ import Switch from '@mui/material/Switch';
 import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import DatePicker from '@mui/lab/DatePicker';
 import { DateTimePicker } from '@mui/lab';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
 import _ from '@lodash';
@@ -26,14 +32,19 @@ import {
   updateIncome,
   addIncome,
 } from './store/incomesSlice';
+import { names } from 'keycode';
 
 const defaultValues = {
   id: FuseUtils.generateGUID(),
-  title: '',
-  allDay: true,
-  start: formatISO(new Date()),
-  end: formatISO(new Date()),
-  extendedProps: { desc: '' },
+  name: '',
+  cashType: '',
+  currency: '',
+  amount: '',
+  incomeReceipt: '',
+  // allDay: true,
+  incomeDate: formatISO(new Date()),
+  // end: formatISO(new Date()),
+  // extendedProps: { desc: '' },
 };
 
 /**
@@ -59,6 +70,36 @@ function AddIncomeDialog(props) {
   const end = watch('end');
   const id = watch('id');
 
+  const[name, setName] = useState('');
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  }
+
+  const [cashType, setCashType] = useState('');
+  const handleCashTypeChange = (event) => {
+    setCashType(event.target.value);
+  };
+
+  const [currency, setCurrencyType] = useState('');
+  const handleCurrencyChange = (event) => {
+    setCurrencyType(event.target.value);
+  };
+
+  const [amount, setAmount] = useState(0);
+  const handleAmountChange = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const [incomeDate, setIncomeDate] = useState(null);
+
+  const [incomeReceipt, setIncomeReceipt] = useState('');
+  const handleIncomeReceiptChange = (event) => {
+    setIncomeReceipt(event.target.value);
+  }
+  
+  useEffect(() => {
+    console.log("incomeDate: ", incomeDate);
+  }, [incomeDate]);
   /**
    * Initialize Dialog with Data
    */
@@ -105,9 +146,17 @@ function AddIncomeDialog(props) {
    */
   function onSubmit(ev) {
     ev.preventDefault();
-    const data = getValues();
+    const data = {
+      income_type: 1,
+      name: name,
+      cash_type: cashType,
+      currency: currency,
+      amount: amount,
+      income_date: formatISO(incomeDate),
+      income_receipt: incomeReceipt
+    }
     if (eventDialog.type === 'new') {
-      dispatch(addEvent(data));
+      dispatch(addIncome(data));
     } else {
       dispatch(updateEvent({ ...eventDialog.data, ...data }));
     }
@@ -138,8 +187,8 @@ function AddIncomeDialog(props) {
         </Toolbar>
       </AppBar>
 
-      <form noValidate>
-        <DialogContent classes={{ root: 'p-16 pb-0 sm:p-24 sm:pb-0' }}>
+      <div noValidate>
+        <DialogContent className='p-16 pb-0 sm:p-24 sm:pb-0'>
           <Controller
             name="title"
             control={control}
@@ -147,7 +196,7 @@ function AddIncomeDialog(props) {
               <TextField
                 {...field}
                 id="title"
-                label="Title"
+                label="Name of organization or person"
                 className="mt-8 mb-16"
                 error={!!errors.title}
                 helperText={errors?.title?.message}
@@ -157,17 +206,75 @@ function AddIncomeDialog(props) {
                 variant="outlined"
                 autoFocus
                 required
+                value={name}
+                onChange={handleNameChange}
                 fullWidth
               />
             )}
           />
 
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cashType}
+                label="Type"
+                className="mb-16"
+                onChange={handleCashTypeChange}
+              >
+                <MenuItem value={"Cash"}>Cash</MenuItem>
+                <MenuItem value={"Bank"}>Bank Transfer</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Choose Currency</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                className="mb-16"
+                value={currency}
+                label="Choose Currency"
+                onChange={handleCurrencyChange}
+              >
+                <MenuItem value={10}>USD</MenuItem>
+                <MenuItem value={20}>UZS</MenuItem>
+                <MenuItem value={30}>EUR</MenuItem>
+                <MenuItem value={40}>GBP</MenuItem>
+                <MenuItem value={50}>RUB</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
           <Controller
+            name="Amount"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                id="amount"
+                label="Amount"
+                className="mb-16"
+                variant="outlined"
+                value={amount}
+                onChange={handleAmountChange}
+                fullWidth
+                type="number"
+              />
+            )}
+          />
+
+          {/* <Controller
             name="allDay"
             control={control}
             render={({ field: { onChange, value } }) => (
               <FormControlLabel
-                className="mt-8 mb-16"
+                className="mb-16"
                 label="All Day"
                 control={
                   <Switch
@@ -180,25 +287,18 @@ function AddIncomeDialog(props) {
                 }
               />
             )}
-          />
+          /> */}
 
-          <Controller
-            name="start"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <DateTimePicker
-                value={value}
-                onChange={onChange}
-                renderInput={(_props) => (
-                  <TextField label="Start" className="mt-8 mb-16 w-full" {..._props} />
-                )}
-                className="mt-8 mb-16 w-full"
-                maxDate={end}
-              />
-            )}
+          <DatePicker
+            label="Add Income Date"
+            value={incomeDate}
+            onChange={(newValue) => {
+              setIncomeDate(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
           />
-
+          
+          {/* 
           <Controller
             name="end"
             control={control}
@@ -213,7 +313,7 @@ function AddIncomeDialog(props) {
                 minDate={start}
               />
             )}
-          />
+          /> */}
 
           <Controller
             name="extendedProps.desc"
@@ -223,12 +323,14 @@ function AddIncomeDialog(props) {
                 {...field}
                 className="mt-8 mb-16"
                 id="desc"
-                label="Description"
+                label="Upload Receipt"
                 type="text"
                 multiline
                 rows={5}
                 variant="outlined"
                 fullWidth
+                value={incomeReceipt}
+                onChange={handleIncomeReceiptChange}
               />
             )}
           />
@@ -240,7 +342,7 @@ function AddIncomeDialog(props) {
               variant="contained"
               color="primary"
               onClick={onSubmit}
-              disabled={_.isEmpty(dirtyFields) || !isValid}
+              // disabled={_.isEmpty(dirtyFields) || !isValid}
             >
               Add
             </Button>
@@ -260,7 +362,7 @@ function AddIncomeDialog(props) {
             </IconButton>
           </DialogActions>
         )}
-      </form>
+      </div>
     </Dialog>
   );
 }

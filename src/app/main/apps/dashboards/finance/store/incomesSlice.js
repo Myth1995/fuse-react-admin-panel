@@ -13,9 +13,9 @@ export const getIncomes = createAsyncThunk('financeDashboardApp/incomes/getIncom
 
 export const addIncome = createAsyncThunk(
   'financeDashboardApp/incomes/addIncome',
-  async (newEvent, { dispatch }) => {
+  async (newIncome, { dispatch }) => {
     const response = await axios.post('/api/finance-dashboard-app/add-income', {
-      newEvent,
+      newIncome,
     });
     const data = await response.data;
 
