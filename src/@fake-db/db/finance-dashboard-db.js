@@ -972,6 +972,361 @@ const financeDashboardAppDB = {
 			extraShippingFee: 3.0,
 			active: true
 		},
+	],
+	statements: [
+		{
+			id: "statement2",
+			pay_day: "",
+			income: 0,
+			expense: 0,
+			remain: 0,
+		},
+		{
+			id: "statement3",
+			pay_day: "",
+			income: 0,
+			expense: 0,
+			remain: 0,
+		},
+		{
+			id: 'statement7',
+			average: [
+				{
+					growth: 492,
+					income: 13
+				},
+				{
+					growth: 492,
+					income: 13
+				}
+			],
+			series: {
+				"This year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Growth',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+				],
+				"Last year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Growth',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				]
+			},
+			options: {
+				chart: {
+					type: 'area',
+					height: '100%',
+					stacked: true,
+					foreColor: '#999',
+					toolbar: {
+						show: false
+					},
+					zoom: {
+						enabled: false
+					}
+				},
+				stroke: {
+					curve: 'smooth',
+					width: 3
+				},
+				dataLabels: {
+					enabled: false
+				},
+				markers: {
+					size: 0,
+					strokeColor: '#fff',
+					strokeWidth: 3,
+					strokeOpacity: 1,
+					fillOpacity: 1,
+					hover: {
+						size: 6
+					}
+				},
+				xaxis: {
+					categories: [
+						'Jan',
+						'Feb',
+						'Mar',
+						'Apr',
+						'May',
+						'Jun',
+						'Jul',
+						'Aug',
+						'Sep',
+						'Oct',
+						'Nov',
+						'Dec'
+					],
+					axisBorder: {
+						show: false
+					},
+					axisTicks: {
+						show: false
+					}
+				},
+				yaxis: {
+					tooltip: {
+						enabled: true
+					}
+				},
+				grid: {
+					position: 'back'
+				},
+				legend: {
+					show: false
+				},
+				fill: {
+					type: 'solid',
+					opacity: 0.7
+				},
+				tooltip: {
+					followCursor: true,
+					theme       : 'dark',
+					fixed: {
+						enabled: false,
+						position: 'topRight',
+						offsetX: 0,
+						offsetY: 0,
+					},
+				}
+			}
+		},
+		{
+			id: 'statement5',
+			sum: [
+				{
+					expense: 0,
+					income: 0
+				},
+				{
+					expense: 0,
+					income: 0
+				}
+			],
+			series: {
+				"This year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Expenses',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				],
+				"Last year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Expenses',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				]
+			},
+			options: {
+				chart: {
+					type: 'area',
+					height: '100%',
+					stacked: true,
+					foreColor: '#999',
+					toolbar: {
+						show: false
+					},
+					zoom: {
+						enabled: false
+					}
+				},
+				stroke: {
+					curve: 'smooth',
+					width: 3
+				},
+				dataLabels: {
+					enabled: false
+				},
+				markers: {
+					size: 0,
+					strokeColor: '#fff',
+					strokeWidth: 3,
+					strokeOpacity: 1,
+					fillOpacity: 1,
+					hover: {
+						size: 6
+					}
+				},
+				xaxis: {
+					categories: [
+						'Jan',
+						'Feb',
+						'Mar',
+						'Apr',
+						'May',
+						'Jun',
+						'Jul',
+						'Aug',
+						'Sep',
+						'Oct',
+						'Nov',
+						'Dec'
+					],
+					axisBorder: {
+						show: false
+					},
+					axisTicks: {
+						show: false
+					}
+				},
+				yaxis: {
+					tooltip: {
+						enabled: true
+					}
+				},
+				grid: {
+					position: 'back'
+				},
+				legend: {
+					show: false
+				},
+				fill: {
+					type: 'solid',
+					opacity: 0.7
+				},
+				tooltip: {
+					followCursor: true,
+					theme       : 'dark',
+					fixed: {
+						enabled: false,
+						position: 'topRight',
+						offsetX: 0,
+						offsetY: 0,
+					},
+				}
+			}
+		},
+		{
+			id: 'statement6',
+			sum: [
+				{
+					expense: 0,
+					income: 0
+				},
+				{
+					expense: 0,
+					income: 0
+				}
+			],
+			series: {
+				"This year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Expenses',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				],
+				"Last year": [
+					{
+						name: 'Incomes',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					},
+					{
+						name: 'Expenses',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				]
+			},
+			options: {
+				chart: {
+					type: 'area',
+					height: '100%',
+					stacked: true,
+					foreColor: '#999',
+					toolbar: {
+						show: false
+					},
+					zoom: {
+						enabled: false
+					}
+				},
+				stroke: {
+					curve: 'smooth',
+					width: 3
+				},
+				dataLabels: {
+					enabled: false
+				},
+				markers: {
+					size: 0,
+					strokeColor: '#fff',
+					strokeWidth: 3,
+					strokeOpacity: 1,
+					fillOpacity: 1,
+					hover: {
+						size: 6
+					}
+				},
+				xaxis: {
+					categories: [
+						'Jan',
+						'Feb',
+						'Mar',
+						'Apr',
+						'May',
+						'Jun',
+						'Jul',
+						'Aug',
+						'Sep',
+						'Oct',
+						'Nov',
+						'Dec'
+					],
+					axisBorder: {
+						show: false
+					},
+					axisTicks: {
+						show: false
+					}
+				},
+				yaxis: {
+					tooltip: {
+						enabled: true
+					}
+				},
+				grid: {
+					position: 'back'
+				},
+				legend: {
+					show: false
+				},
+				fill: {
+					type: 'solid',
+					opacity: 0.7
+				},
+				tooltip: {
+					followCursor: true,
+					theme       : 'dark',
+					fixed: {
+						enabled: false,
+						position: 'topRight',
+						offsetX: 0,
+						offsetY: 0,
+					},
+				}
+			}
+		},
 	]
 };
 
@@ -983,10 +1338,105 @@ mock.onGet('/api/finance-dashboard-app/incomes').reply(config => {
 	return [200, financeDashboardAppDB.incomes];
 });
 
+mock.onGet('/api/finance-dashboard-app/statements').reply(config => {
+	return new Promise((resolve, reject)=>{
+		instance.get('/finance/statements', {
+			timeout: 1000
+		})
+		.then(res => {
+			let data = res.data;
+			financeDashboardAppDB.statements[0].pay_day = data["payday_prev_month"];
+			financeDashboardAppDB.statements[0].income = data["income_prev_month"][0]["cnt"];
+			financeDashboardAppDB.statements[0].expense = data["expense_prev_month"][0]["cnt"];
+			financeDashboardAppDB.statements[0].remain = data["income_prev_month"][0]["cnt"] - data["expense_prev_month"][0]["cnt"];
+			
+			financeDashboardAppDB.statements[1].pay_day = data["payday_this_month"];
+			financeDashboardAppDB.statements[1].income = data["income_this_month"][0]["cnt"];
+			financeDashboardAppDB.statements[1].expense = data["expense_this_month"][0]["cnt"];
+			financeDashboardAppDB.statements[1].remain = data["income_this_month"][0]["cnt"] - data["expense_this_month"][0]["cnt"];
+
+			for(let i = 0; i < data["income_by_month_this_year"].length; i++) {
+				let el = data["income_by_month_this_year"][i];
+				financeDashboardAppDB.statements[2].series["This year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[2].average[0].income += el.cnt;
+			}
+			let growth = 0;
+			for(let i = 0; i < 11; i++) {
+				let el = financeDashboardAppDB.statements[2].series["This year"][0].data;
+				if(el[i] != 0) {
+					financeDashboardAppDB.statements[2].series["This year"][1].data[i+1] = (el[i+1] / el[i]).toFixed(1);
+					growth += (el[i+1] / el[i]);
+				}
+			}
+			growth /= 12;
+			growth = growth.toFixed(1);
+			financeDashboardAppDB.statements[2].average[0].growth = growth;
+			financeDashboardAppDB.statements[2].average[0].income /= 12;
+			financeDashboardAppDB.statements[2].average[0].income = financeDashboardAppDB.statements[2].average[0].income.toFixed(1);
+
+			for(let i = 0; i < data["income_by_month_last_year"].length; i++) {
+				let el = data["income_by_month_last_year"][i];
+				financeDashboardAppDB.statements[2].series["Last year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[2].average[1].income += el.cnt;
+			}
+			growth = 0;
+			for(let i = 0; i < 11; i++) {
+				let el = financeDashboardAppDB.statements[2].series["Last year"][0].data;
+				if(el[i] != 0) {
+					financeDashboardAppDB.statements[2].series["Last year"][1].data[i+1] = (el[i+1] / el[i]).toFixed(1);
+					growth += (el[i+1] / el[i]);
+				}
+			}
+			growth /= 12;
+			growth = growth.toFixed(1);
+			financeDashboardAppDB.statements[2].average[1].growth = growth;
+			financeDashboardAppDB.statements[2].average[1].income /= 12;
+			financeDashboardAppDB.statements[2].average[1].income = financeDashboardAppDB.statements[2].average[1].income.toFixed(1);
+
+			for(let i = 0; i < data["income_by_month_last_year"].length; i++) {
+				let el = data["income_by_month_last_year"][i];
+				financeDashboardAppDB.statements[3].series["Last year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[3].sum[1].income += el.cnt;
+				financeDashboardAppDB.statements[4].series["Last year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[4].sum[1].income += el.cnt;
+			}
+			for(let i = 0; i < data["income_by_month_this_year"].length; i++) {
+				let el = data["income_by_month_this_year"][i];
+				financeDashboardAppDB.statements[3].series["This year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[3].sum[0].income += el.cnt;
+				financeDashboardAppDB.statements[4].series["This year"][0].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[4].sum[0].income += el.cnt;
+			}
+			for(let i = 0; i < data["expense_by_month_last_year"].length; i++) {
+				let el = data["expense_by_month_last_year"][i];
+				financeDashboardAppDB.statements[3].series["Last year"][1].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[3].sum[1].expense += el.cnt;
+			}
+			for(let i = 0; i < data["expense_by_month_this_year"].length; i++) {
+				let el = data["expense_by_month_this_year"][i];
+				financeDashboardAppDB.statements[3].series["This year"][1].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[3].sum[0].expense += el.cnt;
+			}
+
+			for(let i = 0; i < data["salary_expense_by_month_this_year"].length; i++) {
+				let el = data["salary_expense_by_month_this_year"][i];
+				financeDashboardAppDB.statements[4].series["This year"][1].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[4].sum[0].expense += el.cnt;
+			}
+			for(let i = 0; i < data["salary_expense_by_month_last_year"].length; i++) {
+				let el = data["salary_expense_by_month_last_year"][i];
+				financeDashboardAppDB.statements[4].series["Last year"][1].data[el.month-1] = el.cnt;
+				financeDashboardAppDB.statements[4].sum[1].expense += el.cnt;
+			}
+			
+			resolve([200, financeDashboardAppDB.statements]);
+		});
+	})
+});
+
 
 mock.onPost('/api/finance-dashboard-app/add-income').reply(request => {
 	const data = JSON.parse(request.data);
-	console.log(data);
 	return instance.post('/finance/add-income', {
 		data: data
 	})
@@ -1022,7 +1472,6 @@ mock.onGet('/api/finance-dashboard-app/expense').reply(config => {
 
 mock.onPost('/api/finance-dashboard-app/add-expense').reply(request => {
 	const data = JSON.parse(request.data);
-	console.log(data);
 	return instance.post('/finance/add-expense', {
 		data: data
 	})

@@ -468,7 +468,7 @@ mock.onPost('/api/contacts-app/update-contact').reply(request => {
 mock.onPost('/api/contacts-app/remove-contact').reply(request => {
 	const { contactId } = JSON.parse(request.data);
 	// contactsDB.contacts = contactsDB.contacts.filter(contact => contactId !== contact.id);
-	console.log(contactId);
+	
 	instance.delete('/user/'+contactId, {timeout: 1000})
 	.then(res=>{
 		console.log(res.data);

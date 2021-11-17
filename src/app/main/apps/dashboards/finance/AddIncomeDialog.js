@@ -114,7 +114,7 @@ function AddincomeDialog(props) {
   }
   
   useEffect(() => {
-    console.log("incomeDate: ", date);
+    // console.log("incomeDate: ", date);
   }, [date]);
   /**
    * Initialize Dialog with Data

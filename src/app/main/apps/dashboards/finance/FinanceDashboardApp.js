@@ -9,6 +9,7 @@ import _ from '@lodash';
 import { motion } from 'framer-motion';
 import reducer from './store';
 import { selectWidgetsEntities, getWidgets } from './store/widgetsSlice';
+import { selectStatesEntities, getStates } from './store/statementsSlice';
 import Widget1 from './widgets/Widget1';
 import Widget2 from './widgets/Widget2';
 import Widget3 from './widgets/Widget3';
@@ -29,6 +30,7 @@ import { openNewRecuringExpenseDialog } from './store/recuringExpensesSlice';
 
 function FinanceDashboardApp() {
   const dispatch = useDispatch();
+  const states = useSelector(selectStatesEntities);
   const widgets = useSelector(selectWidgetsEntities);
 
   // @author Vodmot
@@ -44,9 +46,14 @@ function FinanceDashboardApp() {
 
   useEffect(() => {
     dispatch(getWidgets());
+    dispatch(getStates());
   }, [dispatch]);
 
   if (_.isEmpty(widgets)) {
+    return null;
+  }
+
+  if (_.isEmpty(states)) {
     return null;
   }
 
@@ -68,7 +75,7 @@ function FinanceDashboardApp() {
     <div className="w-full p-60">
       {/* <Widget1 data={widgets.widget1} /> */}
       <motion.div
-        className="flex flex-col md:flex-row sm:p-8 container"
+        className="flex flex-col md:flex-row sm:p-8 container justify-between"
         variants={container}
         initial="hidden"
         animate="show"
@@ -86,7 +93,7 @@ function FinanceDashboardApp() {
           <Typography
             component={motion.div}
             variants={item}
-            className="px-16 pb-8 text-13 font-medium"
+            className="px-16 pb-8 text-13 font-medium justify-end"
             color="textSecondary"
           >
             Keep track of your financial status
@@ -209,11 +216,11 @@ function FinanceDashboardApp() {
           <div className="flex flex-col sm:flex sm:flex-row pb-16">
             <div className="widget w-full sm:w-1/2 p-16">
               <motion.div variants={item} className="widget flex w-full p-16">
-                <Widget2 data={widgets.widget2} />
+                <Widget2 data={states.statement2} />
               </motion.div>
 
               <motion.div variants={item} className="widget flex w-full p-16">
-                <Widget3 data={widgets.widget3} />
+                <Widget3 data={states.statement3} />
               </motion.div>
 
               <motion.div variants={item} className="widget w-full p-16">
@@ -224,7 +231,7 @@ function FinanceDashboardApp() {
             <div className="widget w-full sm:w-1/2 p-16">
               {/* <div className="w-full"> */}
                 <motion.div variants={item} className="widget w-full h-full p-16 pb-48">
-                  <Widget7 data={widgets.widget7} />
+                  <Widget7 data={states.statement7} />
                 </motion.div>
               {/* </div> */}
             </div>
@@ -234,7 +241,7 @@ function FinanceDashboardApp() {
             <div className="widget flex w-full sm:w-1/2 p-16">
               <div className="w-full">
                 <motion.div variants={item} className="widget w-full p-16">
-                  <Widget5 data={widgets.widget5} />
+                  <Widget5 data={states.statement5} />
                 </motion.div>
               </div>
             </div>
@@ -242,7 +249,7 @@ function FinanceDashboardApp() {
             <div className="widget flex w-full sm:w-1/2 p-16">
               <div className="w-full">
                 <motion.div variants={item} className="widget w-full p-16">
-                  <Widget6 data={widgets.widget6} />
+                  <Widget6 data={states.statement6} />
                 </motion.div>
               </div>
             </div>
