@@ -57,39 +57,25 @@ function Widget7(props) {
 
       <div className="flex flex-row flex-wrap items-center mt-12 pb-40">
         <div className="p-20 pb-0">
-          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
-            Card Limit
-          </Typography>
-          
           <div className="flex flex-row flex-wrap items-center mt-12">
             <Typography className="text-40 font-semibold leading-none tracking-tighter">
-              {data.conversion.value}
+              {data.average[0].growth}%
             </Typography>
           </div>
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Average Monthly Growth
+          </Typography>
         </div>
 
         <div className="p-20 pb-0">
-          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
-            Spent
-          </Typography>
-          
           <div className="flex flex-row flex-wrap items-center mt-12">
             <Typography className="text-40 font-semibold leading-none tracking-tighter">
-              {data.conversion.value}
+              ${data.average[0].income}
             </Typography>
           </div>
-        </div>
-
-        <div className="p-20 pb-0">
           <Typography className="whitespace-nowrap mx-4" color="textSecondary">
-            Minimum
+            Average Monthly Income
           </Typography>
-          
-          <div className="flex flex-row flex-wrap items-center mt-12">
-            <Typography className="text-40 font-semibold leading-none tracking-tighter">
-              {data.conversion.value}
-            </Typography>
-          </div>
         </div>
       </div>
 

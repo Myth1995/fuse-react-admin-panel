@@ -120,7 +120,7 @@ function AddExpenseDialog(props) {
   }
 
   useEffect(() => {
-    console.log("expenseDate: ", expenseDate);
+    // console.log("expenseDate: ", expenseDate);
   }, [expenseDate]);
   /**
    * Initialize Dialog with Data

@@ -20,8 +20,8 @@ function Widget5(props) {
     <Card className="w-full rounded-20 shadow">
       <div className="relative p-20 flex flex-row items-center justify-between">
         <div className="flex flex-col">
-          <Typography className="h3 sm:h2 font-medium">Visitors & Page views</Typography>
-          <Typography className="h5 sm:h2 font-medium" color="textSecondary">Monthly income and avg.monthly expense</Typography>
+          <Typography className="h3 sm:h2 font-medium">Income vs Expenses</Typography>
+          <Typography className="h5 sm:h2 font-medium" color="textSecondary">Monthly income and monthly expenses</Typography>
         </div>
 
         <div className="flex flex-row items-center">
@@ -52,6 +52,30 @@ function Widget5(props) {
               />
             ))}
           </Tabs>
+        </div>
+      </div>
+
+      <div className="flex flex-row flex-wrap items-center mt-12 pb-40">
+        <div className="p-20 pb-0">
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              $&nbsp;{data.sum[0].income}
+            </Typography>
+          </div>
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Income
+          </Typography>
+        </div>
+
+        <div className="p-20 pb-0">
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              $&nbsp;{data.sum[0].expense}
+            </Typography>
+          </div>
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Expense
+          </Typography>
         </div>
       </div>
 

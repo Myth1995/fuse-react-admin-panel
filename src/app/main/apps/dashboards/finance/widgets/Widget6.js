@@ -55,6 +55,30 @@ function Widget6(props) {
         </div>
       </div>
 
+      <div className="flex flex-row flex-wrap items-center mt-12 pb-40">
+        <div className="p-20 pb-0">
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              $&nbsp;{data.sum[0].income}
+            </Typography>
+          </div>
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Incomes
+          </Typography>
+        </div>
+
+        <div className="p-20 pb-0">
+          <div className="flex flex-row flex-wrap items-center mt-12">
+            <Typography className="text-40 font-semibold leading-none tracking-tighter">
+              $&nbsp;{data.sum[0].expense}
+            </Typography>
+          </div>
+          <Typography className="whitespace-nowrap mx-4" color="textSecondary">
+            Salaries
+          </Typography>
+        </div>
+      </div>
+
       <div className="relative h-200 sm:h-320 sm:pb-16">
         <ReactApexChart
           options={data.options}
